@@ -310,7 +310,7 @@ excluded_words =
 ### Manual Execution
 
 ```bash
-cd ~/Documents/Github/search_wallpaper
+cd ~/Documents/Github/search_wallpaper_kubuntu
 source venv/bin/activate
 python src/main.py
 ```
@@ -323,7 +323,7 @@ cat > ~/.local/share/applications/search-wallpaper.desktop << 'EOF'
 Type=Application
 Name=SearchWallpaper
 Comment=Get new wallpaper from Bing
-Exec=/bin/bash -c "cd ~/Documents/Github/search_wallpaper && source venv/bin/activate && python src/main.py"
+Exec=/bin/bash -c "cd ~/Documents/Github/search_wallpaper_kubuntu && source venv/bin/activate && python src/main.py"
 Icon=preferences-desktop-wallpaper
 Terminal=false
 Categories=Utility;
@@ -339,7 +339,7 @@ chmod +x ~/.local/share/applications/search-wallpaper.desktop
 Add to `~/.bashrc`:
 
 ```bash
-alias newwall='cd ~/Documents/Github/search_wallpaper && source venv/bin/activate && python src/main.py'
+alias newwall='cd ~/Documents/Github/search_wallpaper_kubuntu && source venv/bin/activate && python src/main.py'
 ```
 
 Reload configuration:
@@ -432,7 +432,7 @@ sudo apt install python3-tk
 You forgot to activate virtual environment:
 
 ```bash
-cd ~/Documents/Github/search_wallpaper
+cd ~/Documents/Github/search_wallpaper_kubuntu
 source venv/bin/activate
 # Now you should see "(venv)" in terminal
 ```
@@ -532,7 +532,7 @@ search_wallpaper/
 ### Run in Development Mode
 
 ```bash
-cd ~/Documents/Github/search_wallpaper
+cd ~/Documents/Github/search_wallpaper_kubuntu
 source venv/bin/activate
 python src/main.py
 ```
@@ -751,11 +751,11 @@ cd ~/Dokument/Github
 
 # Klona eller ladda ner projektet
 # Om du har git:
-git clone https://github.com/DIN_ANVÄNDARE/search_wallpaper.git
-cd search_wallpaper
+git clone https://github.com/cgillinger/search_wallpaper_kubuntu.git
+cd search_wallpaper_kubuntu
 
 # Om du laddade ner ZIP:
-# Packa upp till ~/Dokument/Github/search_wallpaper
+# Packa upp till ~/Dokument/Github/search_wallpaper_kubuntu
 ```
 
 ---
@@ -764,7 +764,7 @@ cd search_wallpaper
 
 ```bash
 # Gå till projektmappen
-cd ~/Dokument/Github/search_wallpaper
+cd ~/Dokument/Github/search_wallpaper_kubuntu
 
 # Skapa virtual environment
 python3 -m venv venv
@@ -909,7 +909,7 @@ excluded_words =
 ### Manuell körning
 
 ```bash
-cd ~/Dokument/Github/search_wallpaper
+cd ~/Dokument/Github/search_wallpaper_kubuntu
 source venv/bin/activate
 python src/main.py
 ```
@@ -922,7 +922,7 @@ cat > ~/.local/share/applications/search-wallpaper.desktop << 'EOF'
 Type=Application
 Name=SearchWallpaper
 Comment=Hämta ny bakgrundsbild från Bing
-Exec=/bin/bash -c "cd ~/Dokument/Github/search_wallpaper && source venv/bin/activate && python src/main.py"
+Exec=/bin/bash -c "cd ~/Dokument/Github/search_wallpaper_kubuntu && source venv/bin/activate && python src/main.py"
 Icon=preferences-desktop-wallpaper
 Terminal=false
 Categories=Utility;
@@ -938,7 +938,7 @@ chmod +x ~/.local/share/applications/search-wallpaper.desktop
 Lägg till i `~/.bashrc`:
 
 ```bash
-alias newwall='cd ~/Dokument/Github/search_wallpaper && source venv/bin/activate && python src/main.py'
+alias newwall='cd ~/Dokument/Github/search_wallpaper_kubuntu && source venv/bin/activate && python src/main.py'
 ```
 
 Ladda om konfigurationen:
@@ -1031,7 +1031,7 @@ sudo apt install python3-tk
 Du har glömt aktivera virtual environment:
 
 ```bash
-cd ~/Dokument/Github/search_wallpaper
+cd ~/Dokument/Github/search_wallpaper_kubuntu
 source venv/bin/activate
 # Nu ska du se "(venv)" i terminalen
 ```
@@ -1131,7 +1131,7 @@ search_wallpaper/
 ### Köra i utvecklingsläge
 
 ```bash
-cd ~/Dokument/Github/search_wallpaper
+cd ~/Dokument/Github/search_wallpaper_kubuntu
 source venv/bin/activate
 python src/main.py
 ```
