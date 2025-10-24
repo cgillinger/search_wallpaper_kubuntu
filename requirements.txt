@@ -1,0 +1,11 @@
+# SearchWallpaper - Kubuntu Edition
+# Python dependencies
+
+# Web automation
+selenium>=4.16.0
+
+# Image processing and validation
+Pillow>=10.1.0
+
+# HTTP requests
+requests>=2.31.0
