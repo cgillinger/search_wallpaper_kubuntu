@@ -1,69 +1,73 @@
-# SearchWallpaper - Kubuntu Edition
+# SearchWallpaper — Kubuntu Edition
 
-**[🇬🇧 Read in English](README.md)**
+**Automatisk Bing-bakgrundsbildshanterare för KDE Plasma på Kubuntu / Linux**
 
----
+[![Python](https://img.shields.io/badge/python-3.8%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![Platform](https://img.shields.io/badge/plattform-Kubuntu%20%7C%20Linux%20Mint%20KDE-E95420?logo=ubuntu&logoColor=white)](https://kubuntu.org/)
+[![KDE Plasma](https://img.shields.io/badge/KDE_Plasma-5%2B-1D99F3?logo=kde&logoColor=white)](https://kde.org/plasma-desktop/)
+[![Selenium](https://img.shields.io/badge/Selenium-4.16%2B-43B02A?logo=selenium&logoColor=white)](https://www.selenium.dev/)
+[![Microsoft Edge](https://img.shields.io/badge/Microsoft_Edge-krävs-0078D7?logo=microsoftedge&logoColor=white)](https://www.microsoft.com/edge)
+[![License](https://img.shields.io/badge/licens-Öppen_källkod-brightgreen)](LICENSE)
 
-## 🐧 Automatisk bakgrundsbildshanterare för Linux
-
-SearchWallpaper är ett program som automatiskt hämtar och sätter slumpmässiga bakgrundsbilder på din Kubuntu-dator. Programmet söker på Bing efter bilder baserat på söktermer som du själv kan anpassa. Det är särskilt utformat för att hitta högkvalitativa bilder i rätt storlek för moderna skärmar.
-
-**Denna version är specifikt anpassad för Kubuntu med KDE Plasma.**
-
-## 🎯 Funktioner
-
-- ✅ **Automatisk bildhämtning** från Bing Images
-- ✅ **Anpassningsbara söktermer** via konfigurationsfil
-- ✅ **Bildvalidering** - endast högkvalitativa bilder i landskapsformat (1920x1080+)
-- ✅ **Smart filtrering** - undvik teckningar, cartoons, människor etc.
-- ✅ **Historikhantering** - inga dubbletter av nyligen använda bilder
-- ✅ **Daglig sökgräns** - respekterar Bing TOS (max 50/dag)
-- ✅ **Cache-system** - återanvänder bilder vid nätverksproblem
-- ✅ **Detaljerad loggning** - enkel felsökning
-- ✅ **KDE Plasma-integration** - direkt bakgrundsuppdatering
+**[🇬🇧 Read in English](Readme.md)**
 
 ---
 
-## 📋 Systemkrav
+## Vad är SearchWallpaper?
+
+**SearchWallpaper** hämtar automatiskt högupplösta bakgrundsbilder från Bing Images och sätter dem som skrivbordsbakgrund i KDE Plasma på Kubuntu, Linux Mint KDE eller annat Debian-baserat system med KDE Plasma.
+
+Programmet använder en headless Microsoft Edge-webbläsare (via Selenium) för att söka Bing efter bilder som matchar dina egna söktermer. Varje bild valideras för upplösning (minst 1920×1080, landskapsformat) innan den sätts som bakgrundsbild — så du alltid får vassa, fullskärmsbakgrunder.
+
+> **Specifikt utformat för Kubuntu med KDE Plasma.**
+> Inga API-nycklar behövs. Ingen bakgrundsdemon. Kör det när du vill ha en ny bakgrundsbild.
+
+---
+
+## Funktioner
+
+| Funktion | Detaljer |
+|---|---|
+| **Automatisk bildhämtning** | Söker Bing Images via Selenium + headless Edge |
+| **Anpassningsbara söktermer** | Redigera en enkel `.ini`-fil — ingen kodning krävs |
+| **Bildvalidering** | Endast landskapsbilder på 1920×1080 px eller mer |
+| **Smart filtrering** | Blockera nyckelord (tecknat, människor, ritningar osv.) |
+| **Historikhantering** | Håller koll på de senaste 50 bilderna — inga upprepningar |
+| **Daglig sökgräns** | Max 50 sökningar/dag för att respektera Bing TOS |
+| **Cache-system** | Faller tillbaka till cachade bilder vid nätverksproblem |
+| **Detaljerad loggning** | Roterande loggfiler för enkel felsökning |
+| **KDE Plasma-integration** | Använder `plasma-apply-wallpaperimage` direkt |
+
+---
+
+## Systemkrav
 
 ### Hårdvara
-- Modern dator med minst 4GB RAM
+- 4 GB RAM eller mer
 - Internetanslutning
-- Skärmupplösning minst 1920x1080
+- Skärmupplösning 1920×1080 eller högre
 
 ### Programvara
 - **Kubuntu 20.04 eller senare** (testat på 24.04)
-- **KDE Plasma 5 eller 6** (testat på Plasma 5)
+- **KDE Plasma 5 eller 6**
 - **Python 3.8+**
-- **Microsoft Edge** (installationsinstruktioner nedan)
+- **Microsoft Edge** (stable) — se installation nedan
+- **msedgedriver** som matchar din Edge-version — se installation nedan
 
 ### Kompatibilitet
 
-**✅ Testat och fungerar:**
-- Kubuntu 24.04 med KDE Plasma 5
-
-**🟡 Borde fungera (otestat):**
-- Andra Ubuntu-varianter med KDE Plasma
-- Linux Mint KDE Edition
-- KDE neon
-- Debian med KDE Plasma
-
-**🟡 Kan fungera med ändringar:**
-- GNOME (fallback-stöd finns)
-- MATE (GNOME-baserad)
-- Cinnamon (GNOME-baserad)
-
-**❌ Fungerar INTE:**
-- Xfce, LXQt, i3, Sway (inget stöd för bakgrundsbyten)
-- Red Hat/Fedora/Arch Linux (kräver annat paketformat)
+| Status | Skrivbordsmiljö |
+|---|---|
+| ✅ Testat och fungerar | Kubuntu 24.04 med KDE Plasma 5 |
+| 🟡 Borde fungera (otestat) | Ubuntu med KDE, Linux Mint KDE, KDE neon, Debian KDE |
+| 🟡 Kan fungera med ändringar | GNOME, MATE, Cinnamon (fallback-stöd finns) |
+| ❌ Stöds ej | Xfce, LXQt, i3, Sway, Fedora/Arch/Red Hat |
 
 ---
 
-## 🚀 Installation
+## Installation
 
-### Steg 1: Installera Microsoft Edge
-
-Öppna terminalen (`Ctrl+Alt+T`) och kör:
+### Steg 1 — Installera Microsoft Edge
 
 ```bash
 # Ladda ner Microsoft-signeringsnyckeln
@@ -75,236 +79,204 @@ sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
 # Lägg till Edge-repository
 sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/edge stable main" > /etc/apt/sources.list.d/microsoft-edge.list'
 
-# Ta bort temporär nyckel
+# Städa upp
 rm microsoft.gpg
 
 # Uppdatera och installera
 sudo apt update
 sudo apt install microsoft-edge-stable
 
-# Verifiera installation
+# Verifiera
 microsoft-edge --version
 ```
 
 ---
 
-### Steg 2: Installera systempaket
+### Steg 2 — Installera systempaket
 
 ```bash
-# Installera nödvändiga paket
 sudo apt install python3-tk python3-pip python3-venv dbus-x11
 
-# Verifiera Python
+# Verifiera
 python3 --version
 ```
 
 ---
 
-### Steg 3: Ladda ner och installera EdgeDriver
+### Steg 3 — Ladda ner och installera EdgeDriver
 
-**Metod A: Via webbläsaren (rekommenderas för nybörjare)**
+**msedgedriver måste exakt matcha din Edge-webbläsarversion.**
 
-1. Öppna Microsoft Edge
-2. Kolla din Edge-version: `microsoft-edge --version` i terminal
-3. Gå till: https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/
-4. Ladda ner **Linux x64** för din Edge-version
-5. Installera:
+**Metod A — Via webbläsaren (rekommenderas för nybörjare)**
+
+1. Kolla din Edge-version: `microsoft-edge --version`
+2. Gå till: <https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/>
+3. Ladda ner **Linux x64** för din exakta version
+4. Installera:
 
 ```bash
-# Gå till Hämtningar
 cd ~/Hämtningar
-
-# Packa upp
 unzip edgedriver_linux64.zip
-
-# Installera
 sudo mv msedgedriver /usr/local/bin/
 sudo chmod +x /usr/local/bin/msedgedriver
-
-# Verifiera
 /usr/local/bin/msedgedriver --version
 ```
 
-**Metod B: Via terminal (för avancerade)**
+**Metod B — Via terminalen**
 
 ```bash
-# Ersätt VERSION med din Edge-version (t.ex. 141.0.3537.92)
 VERSION=$(microsoft-edge --version | grep -oP '\d+\.\d+\.\d+\.\d+')
 cd ~/Hämtningar
-wget https://msedgedriver.azureedge.net/${VERSION}/edgedriver_linux64.zip
+wget "https://msedgewebdriverstorage.blob.core.windows.net/edgewebdriver/${VERSION}/edgedriver_linux64.zip"
 unzip edgedriver_linux64.zip
 sudo mv msedgedriver /usr/local/bin/
 sudo chmod +x /usr/local/bin/msedgedriver
 /usr/local/bin/msedgedriver --version
 ```
 
+> **OBS:** Om den primära CDN:en (`msedgedriver.azureedge.net`) inte är nåbar — vilket kan hända efter VPN-användning på grund av DNS-problem — använd blob storage-URL:en ovan (`msedgewebdriverstorage.blob.core.windows.net`). Det är ett pålitligt alternativ som alltid fungerar.
+
 ---
 
-### Steg 4: Hämta projektet
+### Steg 4 — Klona repositoryt
 
 ```bash
-# Skapa projektmapp
 mkdir -p ~/Dokument/Github
 cd ~/Dokument/Github
-
-# Klona eller ladda ner projektet
-# Om du har git:
 git clone https://github.com/cgillinger/search_wallpaper_kubuntu.git
 cd search_wallpaper_kubuntu
-
-# Om du laddade ner ZIP:
-# Packa upp till ~/Dokument/Github/search_wallpaper_kubuntu
 ```
 
 ---
 
-### Steg 5: Skapa virtual environment
+### Steg 5 — Skapa Python virtual environment
 
 ```bash
-# Gå till projektmappen
 cd ~/Dokument/Github/search_wallpaper_kubuntu
-
-# Skapa virtual environment
 python3 -m venv venv
-
-# Aktivera (du ska se "(venv)" i terminalen)
 source venv/bin/activate
-
-# Installera Python-paket
 pip install -r requirements.txt
 ```
 
 ---
 
-### Steg 6: Första testkörningen
+### Steg 6 — Första körningen
 
 ```bash
-# Aktivera venv om inte redan aktiverat
 source venv/bin/activate
-
-# Kör programmet
 python src/main.py
 ```
 
-**Om allt fungerar:**
-- Ett GUI-fönster visas med "Söker efter bilder..."
-- Efter några sekunder ändras din bakgrundsbild
+Om allt fungerar:
+- Ett litet statusfönster visas kort
+- Din skrivbordsbakgrund ändras efter några sekunder
 - Fönstret stängs automatiskt
 
 ---
 
-## 📁 Filstruktur
-
-Programmet skapar filer i din hemkatalog enligt XDG Base Directory-standard:
+## Filstruktur
 
 ```
 ~/.local/share/SearchWallpaper/
-├── search_queries.ini    # Dina anpassade söktermer
-├── history.json         # Historik (senaste 50 bilderna)
-├── daily_search_count.json  # Räknare (max 50/dag)
+├── search_queries.ini       # Dina anpassade söktermer
+├── history.json             # Senaste 50 bakgrundsbilder (förhindrar upprepningar)
+├── daily_search_count.json  # Daglig räknare (max 50/dag)
 ├── logs/
-│   └── search_wallpaper.log  # Loggfil för felsökning
+│   └── search_wallpaper.log # Roterande logg för felsökning
 └── cache/
-    └── bing_wallpaper_*.jpg  # Nedladdade bilder
+    └── bing_wallpaper_*.jpg # Nedladdade bakgrundsbilder
 ```
 
-**Varför denna plats?**
-- Följer Linux XDG-standard
-- Inga sudo-rättigheter behövs
-- Separerad från systemfiler
-- Lätt att rensa och återställa
+All data sparas i din hemkatalog enligt [XDG Base Directory-specifikationen](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html). Inga sudo-rättigheter behövs för normal drift.
 
 ---
 
-## 🎨 Anpassa söktermer
-
-### Hitta konfigurationsfilen
+## Anpassa söktermer
 
 ```bash
-# Öppna i textredigerare
 nano ~/.local/share/SearchWallpaper/search_queries.ini
-
-# Eller öppna mappen i filhanteraren (tryck Ctrl+H för att visa dolda mappar)
-dolphin ~/.local/share/SearchWallpaper/
 ```
 
-### Filformat
+**Formatregler:** Inga hakparenteser `[]`, inga citattecken `""`, inga avslutande kommatecken.
 
-**Viktigt:** Använd INTE hakparenteser `[]`, citattecken `""` eller kommatecken på radslut!
-
-**Korrekt format:**
 ```ini
 [Search]
-queries = 
+queries =
     stockholm cityscape wallpaper
-    stockholm skyline wallpaper
     mountain landscape wallpaper
     ocean sunset wallpaper
+    northern lights wallpaper
 
-excluded_words = 
-    people,person,car,cartoon,drawing
+excluded_words =
+    people,person,car,cartoon,drawing,sketch,clipart,anime
 ```
 
-### Exempel på olika teman
+### Exempel på teman
 
-**🏙️ Stockholm:**
+<details>
+<summary>🏙️ Stockholm</summary>
+
 ```ini
-queries = 
+queries =
     stockholm cityscape wallpaper
     stockholm gamla stan wallpaper
     stockholm archipelago wallpaper
     stockholm sunset wallpaper
 ```
+</details>
 
-**🏔️ Natur och landskap:**
+<details>
+<summary>🏔️ Natur och landskap</summary>
+
 ```ini
-queries = 
+queries =
     mountain landscape wallpaper
     forest nature wallpaper
     ocean sunset wallpaper
     northern lights wallpaper
     waterfall nature wallpaper
 ```
+</details>
 
-**🌌 Rymden:**
+<details>
+<summary>🌌 Rymden</summary>
+
 ```ini
-queries = 
+queries =
     galaxy space wallpaper
     nebula wallpaper
     milky way wallpaper
     planet wallpaper
 ```
+</details>
 
-**🦜 Fåglar (standard):**
+<details>
+<summary>🦜 Fåglar (standard)</summary>
+
 ```ini
-queries = 
+queries =
     pet parrot beautiful wallpaper
     macaw bird wallpaper
     cockatoo portrait wallpaper
 ```
+</details>
 
-**🚗 Bilar:**
+<details>
+<summary>🚗 Bilar</summary>
+
 ```ini
-queries = 
+queries =
     sports car wallpaper
     classic car wallpaper
     supercar wallpaper
 ```
-
-### Filtrering
-
-Lägg till ord som ska filtreras bort (kommaseparerade på EN rad):
-
-```ini
-excluded_words = 
-    people,person,car,traffic,cartoon,drawing,sketch,clipart,anime,toy
-```
+</details>
 
 ---
 
-## 🔄 Daglig användning
+## Daglig användning
 
-### Manuell körning
+### Kör manuellt
 
 ```bash
 cd ~/Dokument/Github/search_wallpaper_kubuntu
@@ -312,7 +284,7 @@ source venv/bin/activate
 python src/main.py
 ```
 
-### Skapa desktop launcher (rekommenderas!)
+### Desktop-launcher (rekommenderas)
 
 ```bash
 cat > ~/.local/share/applications/search-wallpaper.desktop << 'EOF'
@@ -329,9 +301,7 @@ EOF
 chmod +x ~/.local/share/applications/search-wallpaper.desktop
 ```
 
-**Nu kan du starta programmet från applikationsmenyn!** 🎯
-
-### Skapa terminal-alias (valfritt)
+### Shell-alias
 
 Lägg till i `~/.bashrc`:
 
@@ -339,259 +309,225 @@ Lägg till i `~/.bashrc`:
 alias newwall='cd ~/Dokument/Github/search_wallpaper_kubuntu && source venv/bin/activate && python src/main.py'
 ```
 
-Ladda om konfigurationen:
-```bash
-source ~/.bashrc
-```
-
-Nu kan du bara skriva `newwall` för ny bakgrund! ⚡
+Ladda sedan om: `source ~/.bashrc`
 
 ---
 
-## 📊 Hantera programdata
-
-### Visa cache och historik
+## Hantera data
 
 ```bash
-# Lista nedladdade bilder
+# Visa nedladdade bilder
 ls -lh ~/.local/share/SearchWallpaper/cache/
-
-# Visa historik
-cat ~/.local/share/SearchWallpaper/history.json
-
-# Visa logg
-tail -50 ~/.local/share/SearchWallpaper/logs/search_wallpaper.log
 
 # Följ loggen i realtid
 tail -f ~/.local/share/SearchWallpaper/logs/search_wallpaper.log
-```
 
-### Rensa och återställa
-
-```bash
-# Rensa cache (behåll konfiguration)
+# Rensa cache
 rm ~/.local/share/SearchWallpaper/cache/*.jpg
 
 # Nollställ daglig räknare
 rm ~/.local/share/SearchWallpaper/daily_search_count.json
 
-# Radera historik (börja om från början)
+# Radera historik (börja om)
 rm ~/.local/share/SearchWallpaper/history.json
 
-# Återställ konfiguration till standard
-rm ~/.local/share/SearchWallpaper/search_queries.ini
-# Kör programmet igen så skapas ny standardfil
-```
-
-### Ta backup av inställningar
-
-```bash
-# Backup hela SearchWallpaper-mappen
+# Backup alla inställningar
 cp -r ~/.local/share/SearchWallpaper ~/Dokument/SearchWallpaper-backup-$(date +%Y%m%d)
-
-# Återställ från backup
-cp -r ~/Dokument/SearchWallpaper-backup-YYYYMMDD ~/.local/share/SearchWallpaper
 ```
 
 ---
 
-## 🐛 Felsökning
+## Felsökning
+
+### Problem: Edge har uppdaterats automatiskt och EdgeDriver-versionen matchar inte längre
+
+När Microsoft Edge uppdaterar sig automatiskt kan den installerade `msedgedriver` sluta matcha den nya webbläsarversionen. Programmet detekterar detta och loggar ett tydligt felmeddelande.
+
+**Hur du upptäcker problemet:**
+
+Kontrollera loggfilen efter ett versionsmatchfel:
+
+```bash
+tail -50 ~/.local/share/SearchWallpaper/logs/search_wallpaper.log
+```
+
+Du ser en rad som:
+```
+EdgeDriver-versionsmatchfel: Edge=131.0.2903.112, msedgedriver=130.0.2849.68
+```
+
+Statusfönstret visar: **"EdgeDriver-version stämmer inte — se loggen för åtgärd"**
+
+**Verifiera båda versionerna manuellt:**
+
+```bash
+microsoft-edge --version
+/usr/local/bin/msedgedriver --version
+# Båda utskrifterna måste visa samma versionsnummer
+```
+
+**Åtgärd — ladda ner rätt EdgeDriver:**
+
+Den primära CDN:en (`msedgedriver.azureedge.net`) är ibland otillgänglig på grund av DNS-problem — till exempel efter VPN-användning. Använd den pålitliga blob storage-URL:en istället:
+
+```bash
+# Hämta din nuvarande Edge-version
+VERSION=$(microsoft-edge --version | grep -oP '\d+\.\d+\.\d+\.\d+')
+echo "Edge-version: $VERSION"
+
+# Ladda ner från blob storage (pålitlig alternativ-URL)
+cd ~/Hämtningar
+wget "https://msedgewebdriverstorage.blob.core.windows.net/edgewebdriver/${VERSION}/edgedriver_linux64.zip"
+
+# Installera
+unzip edgedriver_linux64.zip
+sudo mv msedgedriver /usr/local/bin/
+sudo chmod +x /usr/local/bin/msedgedriver
+
+# Verifiera att båda versionerna matchar
+microsoft-edge --version
+/usr/local/bin/msedgedriver --version
+```
+
+---
 
 ### Problem: "Edge saknas" trots installation
 
 ```bash
-# Kontrollera Edge
 which microsoft-edge
 microsoft-edge --version
-
-# Om inget resultat - installera om (se Steg 1)
+# Om inget resultat — installera om Edge (se Steg 1)
 ```
 
 ### Problem: "msedgedriver kunde inte hittas"
 
 ```bash
-# Kontrollera EdgeDriver
 which msedgedriver
 /usr/local/bin/msedgedriver --version
-
-# Om fel - installera om (se Steg 3)
+# Om fel — installera om EdgeDriver (se Steg 3)
 ```
 
-### Problem: "ModuleNotFoundError: No module named 'tkinter'"
+### Problem: `ModuleNotFoundError: No module named 'tkinter'`
 
 ```bash
-# Installera tkinter
 sudo apt install python3-tk
 ```
 
-### Problem: "externally-managed-environment"
+### Problem: `externally-managed-environment`
 
 Du har glömt aktivera virtual environment:
 
 ```bash
 cd ~/Dokument/Github/search_wallpaper_kubuntu
 source venv/bin/activate
-# Nu ska du se "(venv)" i terminalen
+# Du ska se "(venv)" i din prompt
 ```
 
 ### Problem: Bakgrundsbild ändras inte
 
 ```bash
-# Kontrollera skrivbordsmiljö
-echo $XDG_CURRENT_DESKTOP
-# Ska visa "KDE" eller liknande
-
-# Kontrollera plasma-apply-wallpaperimage
-which plasma-apply-wallpaperimage
+echo $XDG_CURRENT_DESKTOP          # Ska visa "KDE"
+which plasma-apply-wallpaperimage  # Måste finnas
 
 # Testa manuellt
 plasma-apply-wallpaperimage ~/.local/share/SearchWallpaper/cache/bing_wallpaper_*.jpg
 ```
 
-### Problem: "Parsing errors" i konfigurationsfilen
+### Problem: Tolkningsfel i konfigurationsfilen
 
 ```bash
-# Visa filen för att hitta fel
 cat ~/.local/share/SearchWallpaper/search_queries.ini
-
-# Vanliga fel:
-# ❌ Hakparenteser [ ]
-# ❌ Citattecken " "
-# ❌ Kommatecken på radslut ,
-# ✅ Korrekt format - se avsnittet "Anpassa söktermer"
+# Vanliga fel: hakparenteser [ ], citattecken " ", avslutande kommatecken ,
 
 # Återställ till standard
 rm ~/.local/share/SearchWallpaper/search_queries.ini
-python src/main.py  # Skapar ny standardfil
-```
-
-### Problem: "Could not reach host"
-
-EdgeDriver-problem:
-
-```bash
-# Kontrollera EdgeDriver-version matchar Edge
-microsoft-edge --version
-/usr/local/bin/msedgedriver --version
-
-# Versioner ska matcha! Om inte - ladda ner rätt version (se Steg 3)
+python src/main.py  # Skapar en ny standardfil
 ```
 
 ---
 
-## ⚙️ Tekniska detaljer
+## Tekniska detaljer
 
-### Begränsningar
-
-- **Max 50 sökningar/dag** - respekterar Bing TOS
-- **Max 50 bilder i historik** - undviker duplicering
-- **Max 3 loggfiler** - automatisk rotation
-- **Minimikrav bilder:** 1920x1080 pixlar, landskapsformat
-
-### Säkerhet
-
-- ✅ Inga API-nycklar behövs
-- ✅ Lokal datalagring
-- ✅ Ingen bakgrundskörning
-- ✅ Respekterar Bing användarvillkor
-- ✅ Ingen data skickas till externa servrar
-
-### Prestanda
-
-- **Headless browser** - Edge körs osynligt
-- **Smart cachning** - återanvänder bilder
-- **Historikhantering** - undviker dubbletter
-- **Loggrotation** - rensas automatiskt
-
----
-
-## 👨‍💻 Utveckling
-
-### Projektstruktur
+### Arkitektur
 
 ```
-search_wallpaper/
+search_wallpaper_kubuntu/
 ├── src/
 │   ├── api/
-│   │   └── bing_scraper.py      # Bing-sökning med Selenium
+│   │   └── bing_scraper.py      # Bing-sökning via Selenium + EdgeDriver
 │   ├── config/
-│   │   ├── logging_config.py    # Loggning
-│   │   └── search_config.py     # Sökterm-hantering
+│   │   ├── logging_config.py    # Roterande logg-setup
+│   │   └── search_config.py     # Söktermshantering
 │   ├── utils/
-│   │   ├── paths.py             # XDG-sökvägar
+│   │   ├── paths.py             # XDG-kompatibla sökvägar
 │   │   └── wallpaper.py         # KDE Plasma-integration
-│   └── main.py                  # Huvudprogram
-├── venv/                        # Virtual environment
-├── requirements.txt             # Python-beroenden
+│   └── main.py                  # Startpunkt + GUI-statusfönster
+├── requirements.txt
 └── README.md
 ```
 
-### Köra i utvecklingsläge
+### Gränser
 
-```bash
-cd ~/Dokument/Github/search_wallpaper_kubuntu
-source venv/bin/activate
-python src/main.py
-```
+| Gräns | Värde | Anledning |
+|---|---|---|
+| Sökningar per dag | 50 | Respekterar Bing TOS |
+| Historikposter | 50 | Förhindrar upprepningar |
+| Loggfiler | 3 (roterande) | Håller diskutrymme nere |
+| Minsta bildstorlek | 1920×1080 px | Säkerställer Full HD-kvalitet |
 
----
+### Säkerhet
 
-## 📝 Changelog
-
-### Version 2.0 - Kubuntu Edition (2025-10-24)
-
-**Initial release för Linux/Kubuntu:**
-- ✅ KDE Plasma-integration
-- ✅ XDG Base Directory-standard
-- ✅ `plasma-apply-wallpaperimage` för bakgrund
-- ✅ GNOME-fallback för kompatibilitet
-- ✅ Plattformsspecifik Edge-detection
-- ✅ Manuell EdgeDriver-installation
-- ✅ Komplett dokumentation för nybörjare
+- Inga API-nycklar eller konton behövs
+- All data sparas lokalt i `~/.local/share/SearchWallpaper/`
+- Ingen bakgrundsdemon eller schemalagd process
+- Respekterar Bings användarvillkor
+- Ingen data skickas till tredjepartsservrar
 
 ---
 
-## 🤝 Bidra
+## Changelog
 
-### Rapportera problem
+### Version 2.1 (2026-03-07)
 
-1. Kontrollera loggfilen: `~/.local/share/SearchWallpaper/logs/search_wallpaper.log`
-2. Verifiera systemkrav uppfyllda
-3. Testa manuella kommandon från Felsökning
-4. Skapa issue på GitHub med logg och systeminfo
+- **Nytt:** Automatisk EdgeDriver-versionskontroll vid start
+- **Nytt:** Tydligt loggmeddelande med åtgärdsinstruktioner vid versionsmatchfel (inkluderar blob storage-URL som pålitligt CDN-alternativ)
+- **Nytt:** Användarvänligt statusmeddelande i GUI vid versionsmatchfel
 
-### Utveckling
+### Version 2.0 — Kubuntu Edition (2025-10-24)
 
-1. Forka repositoryt
-2. Skapa feature-branch
-3. Följ befintlig kodstil
-4. Testa på Kubuntu
-5. Skicka pull request
-
----
-
-## 📄 Licens
-
-Öppen källkod för personligt bruk.
-
-**OBS:** Programmet använder Bing Image Search och måste respektera Microsofts användarvillkor.
+- KDE Plasma-integration via `plasma-apply-wallpaperimage`
+- XDG Base Directory-standard för alla datafiler
+- GNOME-fallback-stöd
+- Plattformsspecifik Edge-detection
+- Komplett nybörjarvänlig dokumentation
 
 ---
 
-## 🙏 Tack till
+## Bidra
 
-- **Microsoft Edge** - Webbläsare och WebDriver
-- **Selenium** - Webbautomation
-- **Bing Images** - Bildkälla
-- **KDE Plasma** - Desktop Environment
-- **Python-communityn** - Fantastiska bibliotek
+1. Kontrollera loggen: `~/.local/share/SearchWallpaper/logs/search_wallpaper.log`
+2. Verifiera systemkrav
+3. Kör de manuella felsökningskommandona ovan
+4. Öppna ett [GitHub-issue](https://github.com/cgillinger/search_wallpaper_kubuntu/issues) med din loggutskrift och systeminformation
 
----
-
-## 📞 Support
-
-För frågor eller problem - skapa ett issue på GitHub!
+För kodbidrag: forka repositoryt, skapa en feature-branch, följ befintlig kodstil, testa på Kubuntu och skicka sedan en pull request.
 
 ---
 
-**Njut av vackra bakgrundsbilder på din Kubuntu! 🐧🎨**
+## Licens
+
+Öppen källkod för personligt bruk. Det här programmet använder Bing Image Search — vänligen respektera [Microsofts användarvillkor](https://www.microsoft.com/sv-se/servicesagreement/).
+
+---
+
+## Tack till
+
+- **Microsoft Edge** — webbläsare och WebDriver
+- **Selenium** — webbautomationsramverk
+- **Bing Images** — bildkälla
+- **KDE Plasma** — skrivbordsmiljö
+- **Python-communityn** — utmärkta bibliotek
+
+---
+
+**Få vackra, högupplösta bakgrundsbilder på din Kubuntu-dator automatiskt.**

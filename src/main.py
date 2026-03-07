@@ -9,7 +9,7 @@ import tempfile
 import tkinter as tk
 from tkinter import ttk
 import time
-from api.bing_scraper import BingScraper
+from api.bing_scraper import BingScraper, EdgeDriverVersionMismatchError
 from utils.wallpaper import set_wallpaper, download_image
 from config.logging_config import setup_logging
 from utils.paths import get_app_paths, needs_admin
@@ -91,7 +91,13 @@ def main():
         # Initiera BingScraper och sök efter bild
         status.update_status("Söker efter bilder...")
         scraper = BingScraper()
-        image_result = scraper.get_random_image()
+        try:
+            image_result = scraper.get_random_image()
+        except EdgeDriverVersionMismatchError:
+            status.update_status("EdgeDriver-version stämmer inte — se loggen för åtgärd")
+            time.sleep(5)
+            status.close()
+            sys.exit(1)
         
         if not image_result:
             status.update_status("Använder cachad bild...")
