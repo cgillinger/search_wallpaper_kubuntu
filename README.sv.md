@@ -59,8 +59,9 @@ Programmet använder en headless Microsoft Edge-webbläsare (via Selenium) för 
 | Status | Skrivbordsmiljö |
 |---|---|
 | ✅ Testat och fungerar | Kubuntu 24.04 med KDE Plasma 5 |
+| ✅ Testat och fungerar | Linux Mint 21+ med Cinnamon |
 | 🟡 Borde fungera (otestat) | Ubuntu med KDE, Linux Mint KDE, KDE neon, Debian KDE |
-| 🟡 Kan fungera med ändringar | GNOME, MATE, Cinnamon (fallback-stöd finns) |
+| 🟡 Kan fungera med ändringar | GNOME, MATE (fallback-stöd finns) |
 | ❌ Stöds ej | Xfce, LXQt, i3, Sway, Fedora/Arch/Red Hat |
 
 ---

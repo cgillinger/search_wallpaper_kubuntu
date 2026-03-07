@@ -59,8 +59,9 @@ The program uses a headless Microsoft Edge browser (via Selenium) to search Bing
 | Status | Desktop Environment |
 |---|---|
 | ✅ Tested and working | Kubuntu 24.04 with KDE Plasma 5 |
+| ✅ Tested and working | Linux Mint 21+ with Cinnamon |
 | 🟡 Should work (untested) | Ubuntu with KDE, Linux Mint KDE, KDE neon, Debian KDE |
-| 🟡 May work with changes | GNOME, MATE, Cinnamon (fallback support exists) |
+| 🟡 May work with changes | GNOME, MATE (fallback support exists) |
 | ❌ Not supported | Xfce, LXQt, i3, Sway, Fedora/Arch/Red Hat |
 
 ---
