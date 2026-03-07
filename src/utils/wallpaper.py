@@ -1,6 +1,6 @@
 """
 Modul för att hantera nedladdning av bilder och inställning av skrivbordsbakgrund.
-Plattformsoberoende version med stöd för Windows, macOS och Linux (KDE Plasma).
+Plattformsoberoende version med stöd för Windows, macOS och Linux (KDE Plasma, Cinnamon, MATE, GNOME, Enlightenment).
 """
 
 import os
@@ -81,6 +81,41 @@ def set_wallpaper_windows(image_path: str) -> bool:
         logger.error(f"Fel vid inställning av bakgrundsbild på Windows: {str(e)}")
         return False
 
+def set_wallpaper_cinnamon(image_path: str) -> bool:
+    """
+    Sätter bakgrundsbild på Cinnamon (Linux Mint standard).
+    
+    Args:
+        image_path (str): Absolut sökväg till bilden
+        
+    Returns:
+        bool: True om lyckades, False annars
+    """
+    try:
+        result = subprocess.run([
+            'gsettings', 'set', 
+            'org.cinnamon.desktop.background', 
+            'picture-uri', 
+            f'file://{image_path}'
+        ], capture_output=True, text=True, timeout=10)
+        
+        if result.returncode == 0:
+            logger.info("Bakgrundsbild inställd på Cinnamon")
+            return True
+        else:
+            logger.error(f"gsettings misslyckades: {result.stderr}")
+            return False
+            
+    except FileNotFoundError:
+        logger.error("gsettings kunde inte hittas - Cinnamon installerad?")
+        return False
+    except subprocess.TimeoutExpired:
+        logger.error("Timeout vid gsettings-anrop")
+        return False
+    except Exception as e:
+        logger.error(f"Fel vid inställning av bakgrundsbild på Cinnamon: {str(e)}")
+        return False
+
 def set_wallpaper_kde(image_path: str) -> bool:
     """
     Sätter bakgrundsbild på KDE Plasma.
@@ -152,6 +187,39 @@ for (let i = 0; i < desktops.length; i++) {{
 def set_wallpaper_gnome(image_path: str) -> bool:
     """
     Sätter bakgrundsbild på GNOME/Unity.
+    Stöder både ljust och mörkt tema.
+    
+    Args:
+        image_path (str): Absolut sökväg till bilden
+        
+    Returns:
+        bool: True om lyckades, False annars
+    """
+    try:
+        # Sätt både picture-uri (ljust tema) och picture-uri-dark (mörkt tema)
+        subprocess.run([
+            'gsettings', 'set', 
+            'org.gnome.desktop.background', 
+            'picture-uri', 
+            f'file://{image_path}'
+        ], capture_output=True, timeout=10, check=True)
+        
+        subprocess.run([
+            'gsettings', 'set', 
+            'org.gnome.desktop.background', 
+            'picture-uri-dark', 
+            f'file://{image_path}'
+        ], capture_output=True, timeout=10, check=True)
+        
+        logger.info("Bakgrundsbild inställd på GNOME/Unity")
+        return True
+    except Exception as e:
+        logger.error(f"Fel vid inställning av bakgrundsbild på GNOME: {str(e)}")
+        return False
+
+def set_wallpaper_mate(image_path: str) -> bool:
+    """
+    Sätter bakgrundsbild på MATE Desktop.
     
     Args:
         image_path (str): Absolut sökväg till bilden
@@ -162,17 +230,63 @@ def set_wallpaper_gnome(image_path: str) -> bool:
     try:
         result = subprocess.run([
             'gsettings', 'set', 
-            'org.gnome.desktop.background', 
-            'picture-uri', 
-            f'file://{image_path}'
-        ], capture_output=True, timeout=10)
+            'org.mate.background', 
+            'picture-filename', 
+            image_path
+        ], capture_output=True, text=True, timeout=10)
         
         if result.returncode == 0:
-            logger.info("Bakgrundsbild inställd på GNOME/Unity")
+            logger.info("Bakgrundsbild inställd på MATE")
             return True
+        else:
+            logger.error(f"gsettings misslyckades: {result.stderr}")
+            return False
+            
+    except FileNotFoundError:
+        logger.error("gsettings kunde inte hittas - MATE installerad?")
+        return False
+    except subprocess.TimeoutExpired:
+        logger.error("Timeout vid gsettings-anrop")
         return False
     except Exception as e:
-        logger.error(f"Fel vid inställning av bakgrundsbild på GNOME: {str(e)}")
+        logger.error(f"Fel vid inställning av bakgrundsbild på MATE: {str(e)}")
+        return False
+
+def set_wallpaper_enlightenment(image_path: str) -> bool:
+    """
+    Sätter bakgrundsbild på Enlightenment (E17/E18+).
+    
+    Args:
+        image_path (str): Absolut sökväg till bilden
+        
+    Returns:
+        bool: True om lyckades, False annars
+    """
+    try:
+        # enlightenment_remote -desktop-bg-add ZONE DESK X Y /path/to/image
+        # 0 0 0 0 = zone 0, desktop 0, position 0,0
+        result = subprocess.run([
+            'enlightenment_remote',
+            '-desktop-bg-add',
+            '0', '0', '0', '0',
+            image_path
+        ], capture_output=True, text=True, timeout=10)
+        
+        if result.returncode == 0:
+            logger.info("Bakgrundsbild inställd på Enlightenment")
+            return True
+        else:
+            logger.error(f"enlightenment_remote misslyckades: {result.stderr}")
+            return False
+            
+    except FileNotFoundError:
+        logger.error("enlightenment_remote kunde inte hittas - Enlightenment installerad?")
+        return False
+    except subprocess.TimeoutExpired:
+        logger.error("Timeout vid enlightenment_remote-anrop")
+        return False
+    except Exception as e:
+        logger.error(f"Fel vid inställning av bakgrundsbild på Enlightenment: {str(e)}")
         return False
 
 def set_wallpaper_macos(image_path: str) -> bool:
@@ -202,6 +316,11 @@ def set_wallpaper(image_path: str) -> bool:
     Sätter den angivna bilden som skrivbordsbakgrund.
     Plattformsoberoende - detekterar automatiskt operativsystem och skrivbordsmiljö.
     
+    Stöd för:
+    - Windows
+    - macOS
+    - Linux: KDE Plasma, Cinnamon, MATE, GNOME, Unity, Enlightenment
+    
     Args:
         image_path (str): Sökvägen till bilden som ska användas
         
@@ -228,20 +347,49 @@ def set_wallpaper(image_path: str) -> bool:
         elif system == "linux":
             # Detektera skrivbordsmiljö
             desktop = os.environ.get('XDG_CURRENT_DESKTOP', '').lower()
+            logger.info(f"Detekterad skrivbordsmiljö: {desktop}")
             
-            if 'kde' in desktop or 'plasma' in desktop:
+            # Cinnamon (Linux Mint standard)
+            if 'cinnamon' in desktop:
+                return set_wallpaper_cinnamon(abs_path)
+            
+            # KDE Plasma
+            elif 'kde' in desktop or 'plasma' in desktop:
                 return set_wallpaper_kde(abs_path)
-                
+            
+            # MATE Desktop
+            elif 'mate' in desktop:
+                return set_wallpaper_mate(abs_path)
+            
+            # Enlightenment
+            elif 'enlightenment' in desktop or 'e17' in desktop or 'e18' in desktop or 'e19' in desktop:
+                return set_wallpaper_enlightenment(abs_path)
+            
+            # GNOME/Unity
             elif 'gnome' in desktop or 'unity' in desktop:
                 return set_wallpaper_gnome(abs_path)
-                
+            
+            # Okänd skrivbordsmiljö - intelligent fallback
             else:
-                # Försök KDE först, sen GNOME som fallback
-                logger.warning(f"Okänd skrivbordsmiljö: {desktop}, försöker KDE...")
-                if set_wallpaper_kde(abs_path):
-                    return True
-                logger.warning("KDE misslyckades, försöker GNOME...")
-                return set_wallpaper_gnome(abs_path)
+                logger.warning(f"Okänd skrivbordsmiljö: {desktop}, försöker alla metoder...")
+                
+                # Försök i prioritetsordning baserat på vanligaste Linux-distributioner
+                methods = [
+                    ('Cinnamon', set_wallpaper_cinnamon),
+                    ('KDE Plasma', set_wallpaper_kde),
+                    ('MATE', set_wallpaper_mate),
+                    ('Enlightenment', set_wallpaper_enlightenment),
+                    ('GNOME', set_wallpaper_gnome)
+                ]
+                
+                for name, method in methods:
+                    logger.info(f"Försöker {name}...")
+                    if method(abs_path):
+                        logger.info(f"Lyckades med {name}")
+                        return True
+                
+                logger.error("Ingen metod fungerade")
+                return False
         else:
             logger.error(f"Operativsystemet stöds inte: {system}")
             return False

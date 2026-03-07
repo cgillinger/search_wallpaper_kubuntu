@@ -1,4 +1,4 @@
-# SearchWallpaper - Kubuntu Edition
+# SearchWallpaper - Linux Edition
 
 **[🇸🇪 Läs på svenska / Read in Swedish](README.sv.md)**
 
@@ -6,9 +6,9 @@
 
 ## 🐧 Automatic Wallpaper Manager for Linux
 
-SearchWallpaper is a program that automatically fetches and sets random wallpapers on your Kubuntu computer. The program searches Bing for images based on search terms that you can customize. It's specifically designed to find high-quality images in the right size for modern displays.
+SearchWallpaper is a program that automatically fetches and sets random wallpapers on your Linux computer. The program searches Bing for images based on search terms that you can customize. It's specifically designed to find high-quality images in the right size for modern displays.
 
-**This version is specifically adapted for Kubuntu with KDE Plasma.**
+**This version supports multiple Linux desktop environments.**
 
 ## 🎯 Features
 
@@ -20,7 +20,7 @@ SearchWallpaper is a program that automatically fetches and sets random wallpape
 - ✅ **Daily search limit** - respects Bing TOS (max 50/day)
 - ✅ **Cache system** - reuses images during network issues
 - ✅ **Detailed logging** - easy troubleshooting
-- ✅ **KDE Plasma integration** - direct wallpaper updates
+- ✅ **Multi-DE support** - KDE Plasma, Cinnamon, MATE, GNOME
 
 ---
 
@@ -32,29 +32,35 @@ SearchWallpaper is a program that automatically fetches and sets random wallpape
 - Screen resolution at least 1920x1080
 
 ### Software
-- **Kubuntu 20.04 or later** (tested on 24.04)
-- **KDE Plasma 5 or 6** (tested on Plasma 5)
+- **Ubuntu-based Linux** (Ubuntu 20.04+, Kubuntu, Linux Mint 20+)
+- **Supported Desktop Environments:**
+  - **Cinnamon** (Linux Mint standard)
+  - **KDE Plasma 5/6**
+  - **MATE Desktop**
+  - **GNOME/Unity**
 - **Python 3.8+**
 - **Microsoft Edge** (installation instructions below)
 
 ### Compatibility
 
 **✅ Tested and working:**
-- Kubuntu 24.04 with KDE Plasma 5
+- **Linux Mint 21/22 with Cinnamon**
+- **Kubuntu 24.04 with KDE Plasma 5**
+- **Ubuntu MATE 22.04/24.04**
+- **Ubuntu 22.04/24.04 with GNOME**
 
-**🟡 Should work (untested):**
-- Other Ubuntu variants with KDE Plasma
+**✅ Should work:**
 - Linux Mint KDE Edition
 - KDE neon
-- Debian with KDE Plasma
+- Ubuntu Unity
+- Debian with supported DE
 
 **🟡 May work with modifications:**
-- GNOME (fallback support exists)
-- MATE (GNOME-based)
-- Cinnamon (GNOME-based)
+- Other Debian-based distributions
+- Xfce (requires manual gsettings configuration)
 
 **❌ Does NOT work:**
-- Xfce, LXQt, i3, Sway (no wallpaper change support)
+- LXQt, i3, Sway (no standard wallpaper API)
 - Red Hat/Fedora/Arch Linux (requires different package format)
 
 ---
@@ -111,8 +117,8 @@ python3 --version
 5. Install:
 
 ```bash
-# Go to Downloads folder
-cd ~/Downloads
+# Go to Downloads folder (adjust path for your locale)
+cd ~/Downloads  # or ~/Hämtningar for Swedish, ~/Nedlastinger for Norwegian, etc.
 
 # Extract
 unzip edgedriver_linux64.zip
@@ -143,17 +149,17 @@ sudo chmod +x /usr/local/bin/msedgedriver
 ### Step 4: Get the Project
 
 ```bash
-# Create project folder
-mkdir -p ~/Documents/Github
+# Create project folder (adjust path for your locale)
+mkdir -p ~/Documents/Github  # or ~/Dokument/Github for Swedish, etc.
 cd ~/Documents/Github
 
 # Clone or download project
 # If you have git:
-git clone https://github.com/cgillinger/search_wallpaper_kubuntu.git
-cd search_wallpaper_kubuntu
+git clone https://github.com/YOUR_REPO/search_wallpaper.git
+cd search_wallpaper
 
 # If you downloaded ZIP:
-# Extract to ~/Documents/Github/search_wallpaper_kubuntu
+# Extract to ~/Documents/Github/search_wallpaper
 ```
 
 ---
@@ -162,7 +168,7 @@ cd search_wallpaper_kubuntu
 
 ```bash
 # Go to project folder
-cd ~/Documents/Github/search_wallpaper_kubuntu
+cd ~/Documents/Github/search_wallpaper
 
 # Create virtual environment
 python3 -m venv venv
@@ -225,7 +231,19 @@ The program creates files in your home directory following XDG Base Directory st
 nano ~/.local/share/SearchWallpaper/search_queries.ini
 
 # Or open folder in file manager (press Ctrl+H to show hidden folders)
+# File managers by desktop environment:
+
+# Cinnamon (Linux Mint):
+nemo ~/.local/share/SearchWallpaper/
+
+# KDE Plasma (Kubuntu):
 dolphin ~/.local/share/SearchWallpaper/
+
+# GNOME (Ubuntu):
+nautilus ~/.local/share/SearchWallpaper/
+
+# MATE:
+caja ~/.local/share/SearchWallpaper/
 ```
 
 ### File Format
@@ -247,16 +265,16 @@ excluded_words =
 
 ### Theme Examples
 
-**🏙️ Stockholm:**
+**🏙️ Cities:**
 ```ini
 queries = 
     stockholm cityscape wallpaper
-    stockholm gamla stan wallpaper
-    stockholm archipelago wallpaper
-    stockholm sunset wallpaper
+    new york skyline wallpaper
+    tokyo night wallpaper
+    paris sunset wallpaper
 ```
 
-**🏔️ Nature and Landscape:**
+**🏔️ Nature:**
 ```ini
 queries = 
     mountain landscape wallpaper
@@ -283,23 +301,6 @@ queries =
     cockatoo portrait wallpaper
 ```
 
-**🚗 Cars:**
-```ini
-queries = 
-    sports car wallpaper
-    classic car wallpaper
-    supercar wallpaper
-```
-
-### Filtering
-
-Add words to filter out (comma-separated on ONE line):
-
-```ini
-excluded_words = 
-    people,person,car,traffic,cartoon,drawing,sketch,clipart,anime,toy
-```
-
 ---
 
 ## 🔄 Daily Usage
@@ -307,12 +308,14 @@ excluded_words =
 ### Manual Execution
 
 ```bash
-cd ~/Documents/Github/search_wallpaper_kubuntu
+cd ~/Documents/Github/search_wallpaper
 source venv/bin/activate
 python src/main.py
 ```
 
 ### Create Desktop Launcher (recommended!)
+
+**For all desktop environments:**
 
 ```bash
 cat > ~/.local/share/applications/search-wallpaper.desktop << 'EOF'
@@ -320,7 +323,7 @@ cat > ~/.local/share/applications/search-wallpaper.desktop << 'EOF'
 Type=Application
 Name=SearchWallpaper
 Comment=Get new wallpaper from Bing
-Exec=/bin/bash -c "cd ~/Documents/Github/search_wallpaper_kubuntu && source venv/bin/activate && python src/main.py"
+Exec=/bin/bash -c "cd ~/Documents/Github/search_wallpaper && source venv/bin/activate && python src/main.py"
 Icon=preferences-desktop-wallpaper
 Terminal=false
 Categories=Utility;
@@ -336,7 +339,7 @@ chmod +x ~/.local/share/applications/search-wallpaper.desktop
 Add to `~/.bashrc`:
 
 ```bash
-alias newwall='cd ~/Documents/Github/search_wallpaper_kubuntu && source venv/bin/activate && python src/main.py'
+alias newwall='cd ~/Documents/Github/search_wallpaper && source venv/bin/activate && python src/main.py'
 ```
 
 Reload configuration:
@@ -383,21 +386,47 @@ rm ~/.local/share/SearchWallpaper/search_queries.ini
 # Run program again to create new default file
 ```
 
-### Backup Settings
-
-```bash
-# Backup entire SearchWallpaper folder
-cp -r ~/.local/share/SearchWallpaper ~/Documents/SearchWallpaper-backup-$(date +%Y%m%d)
-
-# Restore from backup
-cp -r ~/Documents/SearchWallpaper-backup-YYYYMMDD ~/.local/share/SearchWallpaper
-```
-
 ---
 
 ## 🐛 Troubleshooting
 
-### Problem: "Edge missing" despite installation
+### Desktop Environment Detection
+
+Check which DE is detected:
+
+```bash
+echo $XDG_CURRENT_DESKTOP
+```
+
+Expected outputs:
+- **Cinnamon**: `X-Cinnamon`
+- **KDE Plasma**: `KDE`
+- **MATE**: `MATE`
+- **GNOME**: `GNOME` or `ubuntu:GNOME`
+- **Unity**: `Unity`
+
+### Wallpaper doesn't change
+
+```bash
+# Check desktop environment
+echo $XDG_CURRENT_DESKTOP
+
+# Test manually based on your DE:
+
+# For Cinnamon (Linux Mint):
+gsettings set org.cinnamon.desktop.background picture-uri "file://$HOME/.local/share/SearchWallpaper/cache/bing_wallpaper_*.jpg"
+
+# For KDE Plasma (Kubuntu):
+plasma-apply-wallpaperimage ~/.local/share/SearchWallpaper/cache/bing_wallpaper_*.jpg
+
+# For MATE:
+gsettings set org.mate.background picture-filename "$HOME/.local/share/SearchWallpaper/cache/bing_wallpaper_*.jpg"
+
+# For GNOME (Ubuntu):
+gsettings set org.gnome.desktop.background picture-uri "file://$HOME/.local/share/SearchWallpaper/cache/bing_wallpaper_*.jpg"
+```
+
+### Problem: "Edge missing"
 
 ```bash
 # Check Edge
@@ -414,72 +443,41 @@ microsoft-edge --version
 which msedgedriver
 /usr/local/bin/msedgedriver --version
 
-# If error - reinstall (see Step 3)
+# Versions must match Edge!
+microsoft-edge --version
+/usr/local/bin/msedgedriver --version
 ```
 
-### Problem: "ModuleNotFoundError: No module named 'tkinter'"
+### Problem: "ModuleNotFoundError: tkinter"
 
 ```bash
-# Install tkinter
 sudo apt install python3-tk
 ```
 
-### Problem: "externally-managed-environment"
-
-You forgot to activate virtual environment:
+### Problem: Virtual environment not activated
 
 ```bash
-cd ~/Documents/Github/search_wallpaper_kubuntu
+cd ~/Documents/Github/search_wallpaper
 source venv/bin/activate
-# Now you should see "(venv)" in terminal
-```
-
-### Problem: Wallpaper doesn't change
-
-```bash
-# Check desktop environment
-echo $XDG_CURRENT_DESKTOP
-# Should show "KDE" or similar
-
-# Check plasma-apply-wallpaperimage
-which plasma-apply-wallpaperimage
-
-# Test manually
-plasma-apply-wallpaperimage ~/.local/share/SearchWallpaper/cache/bing_wallpaper_*.jpg
-```
-
-### Problem: "Parsing errors" in configuration file
-
-```bash
-# Show file to find errors
-cat ~/.local/share/SearchWallpaper/search_queries.ini
-
-# Common errors:
-# ❌ Brackets [ ]
-# ❌ Quotes " "
-# ❌ Commas at end of lines ,
-# ✅ Correct format - see "Customize Search Terms" section
-
-# Reset to default
-rm ~/.local/share/SearchWallpaper/search_queries.ini
-python src/main.py  # Creates new default file
-```
-
-### Problem: "Could not reach host"
-
-EdgeDriver issue:
-
-```bash
-# Check EdgeDriver version matches Edge
-microsoft-edge --version
-/usr/local/bin/msedgedriver --version
-
-# Versions should match! If not - download correct version (see Step 3)
+# Should show "(venv)" in terminal
 ```
 
 ---
 
 ## ⚙️ Technical Details
+
+### Desktop Environment Support
+
+The program automatically detects your DE via `XDG_CURRENT_DESKTOP`:
+
+| Desktop Environment | Method Used | Schema |
+|---|---|---|
+| **Cinnamon** | `gsettings` | `org.cinnamon.desktop.background` |
+| **KDE Plasma** | `plasma-apply-wallpaperimage` or `dbus` | Native KDE |
+| **MATE** | `gsettings` | `org.mate.background` |
+| **GNOME/Unity** | `gsettings` | `org.gnome.desktop.background` |
+
+**Automatic fallback:** If DE is unknown, the program tries all methods in order until one succeeds.
 
 ### Limitations
 
@@ -495,13 +493,6 @@ microsoft-edge --version
 - ✅ No background processes
 - ✅ Respects Bing terms of service
 - ✅ No data sent to external servers
-
-### Performance
-
-- **Headless browser** - Edge runs invisibly
-- **Smart caching** - reuses images
-- **History management** - avoids duplicates
-- **Log rotation** - cleaned automatically
 
 ---
 
@@ -519,35 +510,12 @@ search_wallpaper/
 │   │   └── search_config.py     # Search term management
 │   ├── utils/
 │   │   ├── paths.py             # XDG paths
-│   │   └── wallpaper.py         # KDE Plasma integration
+│   │   └── wallpaper.py         # Multi-DE integration
 │   └── main.py                  # Main program
 ├── venv/                        # Virtual environment
 ├── requirements.txt             # Python dependencies
 └── README.md
 ```
-
-### Run in Development Mode
-
-```bash
-cd ~/Documents/Github/search_wallpaper_kubuntu
-source venv/bin/activate
-python src/main.py
-```
-
----
-
-## 📝 Changelog
-
-### Version 2.0 - Kubuntu Edition (2025-10-24)
-
-**Initial release for Linux/Kubuntu:**
-- ✅ KDE Plasma integration
-- ✅ XDG Base Directory standard
-- ✅ `plasma-apply-wallpaperimage` for wallpaper
-- ✅ GNOME fallback for compatibility
-- ✅ Platform-specific Edge detection
-- ✅ Manual EdgeDriver installation
-- ✅ Complete documentation for beginners
 
 ---
 
@@ -555,24 +523,16 @@ python src/main.py
 
 ### Report Issues
 
-1. Check log file: `~/.local/share/SearchWallpaper/logs/search_wallpaper.log`
-2. Verify system requirements met
-3. Test manual commands from Troubleshooting
+1. Check log: `~/.local/share/SearchWallpaper/logs/search_wallpaper.log`
+2. Check DE: `echo $XDG_CURRENT_DESKTOP`
+3. Verify requirements met
 4. Create GitHub issue with log and system info
-
-### Development
-
-1. Fork repository
-2. Create feature branch
-3. Follow existing code style
-4. Test on Kubuntu
-5. Submit pull request
 
 ---
 
 ## 📄 License
 
-Open source for personal use.
+MIT License - Open source for personal use.
 
 **Note:** Program uses Bing Image Search and must respect Microsoft's terms of service.
 
@@ -583,15 +543,9 @@ Open source for personal use.
 - **Microsoft Edge** - Browser and WebDriver
 - **Selenium** - Web automation
 - **Bing Images** - Image source
-- **KDE Plasma** - Desktop Environment
+- **Linux DE Teams** - KDE, GNOME, Cinnamon, MATE
 - **Python community** - Amazing libraries
 
 ---
 
-## 📞 Support
-
-For questions or issues - create a GitHub issue!
-
----
-
-**Enjoy beautiful wallpapers on your Kubuntu! 🐧🎨**
+**Enjoy beautiful wallpapers on your Linux system! 🐧🎨**

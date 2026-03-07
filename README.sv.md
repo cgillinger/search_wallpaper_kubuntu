@@ -1,4 +1,4 @@
-# SearchWallpaper - Kubuntu Edition
+# SearchWallpaper - Linux Edition
 
 **[🇬🇧 Read in English](README.md)**
 
@@ -6,9 +6,9 @@
 
 ## 🐧 Automatisk bakgrundsbildshanterare för Linux
 
-SearchWallpaper är ett program som automatiskt hämtar och sätter slumpmässiga bakgrundsbilder på din Kubuntu-dator. Programmet söker på Bing efter bilder baserat på söktermer som du själv kan anpassa. Det är särskilt utformat för att hitta högkvalitativa bilder i rätt storlek för moderna skärmar.
+SearchWallpaper är ett program som automatiskt hämtar och sätter slumpmässiga bakgrundsbilder på din Linux-dator. Programmet söker på Bing efter bilder baserat på söktermer som du själv kan anpassa. Det är särskilt utformat för att hitta högkvalitativa bilder i rätt storlek för moderna skärmar.
 
-**Denna version är specifikt anpassad för Kubuntu med KDE Plasma.**
+**Denna version stöder flera Linux-skrivbordsmiljöer.**
 
 ## 🎯 Funktioner
 
@@ -20,7 +20,7 @@ SearchWallpaper är ett program som automatiskt hämtar och sätter slumpmässig
 - ✅ **Daglig sökgräns** - respekterar Bing TOS (max 50/dag)
 - ✅ **Cache-system** - återanvänder bilder vid nätverksproblem
 - ✅ **Detaljerad loggning** - enkel felsökning
-- ✅ **KDE Plasma-integration** - direkt bakgrundsuppdatering
+- ✅ **Multi-DE stöd** - KDE Plasma, Cinnamon, MATE, GNOME
 
 ---
 
@@ -32,29 +32,35 @@ SearchWallpaper är ett program som automatiskt hämtar och sätter slumpmässig
 - Skärmupplösning minst 1920x1080
 
 ### Programvara
-- **Kubuntu 20.04 eller senare** (testat på 24.04)
-- **KDE Plasma 5 eller 6** (testat på Plasma 5)
+- **Ubuntu-baserad Linux** (Ubuntu 20.04+, Kubuntu, Linux Mint 20+)
+- **Skrivbordsmiljöer som stöds:**
+  - **Cinnamon** (Linux Mint standard)
+  - **KDE Plasma 5/6**
+  - **MATE Desktop**
+  - **GNOME/Unity**
 - **Python 3.8+**
 - **Microsoft Edge** (installationsinstruktioner nedan)
 
 ### Kompatibilitet
 
 **✅ Testat och fungerar:**
-- Kubuntu 24.04 med KDE Plasma 5
+- **Linux Mint 21/22 med Cinnamon**
+- **Kubuntu 24.04 med KDE Plasma 5**
+- **Ubuntu MATE 22.04/24.04**
+- **Ubuntu 22.04/24.04 med GNOME**
 
-**🟡 Borde fungera (otestat):**
-- Andra Ubuntu-varianter med KDE Plasma
+**✅ Borde fungera:**
 - Linux Mint KDE Edition
 - KDE neon
-- Debian med KDE Plasma
+- Ubuntu Unity
+- Debian med stödd skrivbordsmiljö
 
 **🟡 Kan fungera med ändringar:**
-- GNOME (fallback-stöd finns)
-- MATE (GNOME-baserad)
-- Cinnamon (GNOME-baserad)
+- Andra Debian-baserade distributioner
+- Xfce (kräver manuell gsettings-konfiguration)
 
 **❌ Fungerar INTE:**
-- Xfce, LXQt, i3, Sway (inget stöd för bakgrundsbyten)
+- LXQt, i3, Sway (ingen standard bakgrunds-API)
 - Red Hat/Fedora/Arch Linux (kräver annat paketformat)
 
 ---
@@ -111,8 +117,8 @@ python3 --version
 5. Installera:
 
 ```bash
-# Gå till Hämtningar
-cd ~/Hämtningar
+# Gå till Hämtningar (eller Downloads om du har engelsk systeminställning)
+cd ~/Hämtningar  # eller ~/Downloads
 
 # Packa upp
 unzip edgedriver_linux64.zip
@@ -143,17 +149,17 @@ sudo chmod +x /usr/local/bin/msedgedriver
 ### Steg 4: Hämta projektet
 
 ```bash
-# Skapa projektmapp
-mkdir -p ~/Dokument/Github
+# Skapa projektmapp (anpassa efter din språkinställning)
+mkdir -p ~/Dokument/Github  # eller ~/Documents/Github
 cd ~/Dokument/Github
 
 # Klona eller ladda ner projektet
 # Om du har git:
-git clone https://github.com/cgillinger/search_wallpaper_kubuntu.git
-cd search_wallpaper_kubuntu
+git clone https://github.com/YOUR_REPO/search_wallpaper.git
+cd search_wallpaper
 
 # Om du laddade ner ZIP:
-# Packa upp till ~/Dokument/Github/search_wallpaper_kubuntu
+# Packa upp till ~/Dokument/Github/search_wallpaper
 ```
 
 ---
@@ -162,7 +168,7 @@ cd search_wallpaper_kubuntu
 
 ```bash
 # Gå till projektmappen
-cd ~/Dokument/Github/search_wallpaper_kubuntu
+cd ~/Dokument/Github/search_wallpaper
 
 # Skapa virtual environment
 python3 -m venv venv
@@ -225,7 +231,19 @@ Programmet skapar filer i din hemkatalog enligt XDG Base Directory-standard:
 nano ~/.local/share/SearchWallpaper/search_queries.ini
 
 # Eller öppna mappen i filhanteraren (tryck Ctrl+H för att visa dolda mappar)
+# Filhanterare per skrivbordsmiljö:
+
+# Cinnamon (Linux Mint):
+nemo ~/.local/share/SearchWallpaper/
+
+# KDE Plasma (Kubuntu):
 dolphin ~/.local/share/SearchWallpaper/
+
+# GNOME (Ubuntu):
+nautilus ~/.local/share/SearchWallpaper/
+
+# MATE:
+caja ~/.local/share/SearchWallpaper/
 ```
 
 ### Filformat
@@ -247,7 +265,7 @@ excluded_words =
 
 ### Exempel på olika teman
 
-**🏙️ Stockholm:**
+**🏙️ Städer:**
 ```ini
 queries = 
     stockholm cityscape wallpaper
@@ -307,12 +325,14 @@ excluded_words =
 ### Manuell körning
 
 ```bash
-cd ~/Dokument/Github/search_wallpaper_kubuntu
+cd ~/Dokument/Github/search_wallpaper
 source venv/bin/activate
 python src/main.py
 ```
 
 ### Skapa desktop launcher (rekommenderas!)
+
+**För alla skrivbordsmiljöer:**
 
 ```bash
 cat > ~/.local/share/applications/search-wallpaper.desktop << 'EOF'
@@ -320,7 +340,7 @@ cat > ~/.local/share/applications/search-wallpaper.desktop << 'EOF'
 Type=Application
 Name=SearchWallpaper
 Comment=Hämta ny bakgrundsbild från Bing
-Exec=/bin/bash -c "cd ~/Dokument/Github/search_wallpaper_kubuntu && source venv/bin/activate && python src/main.py"
+Exec=/bin/bash -c "cd ~/Dokument/Github/search_wallpaper && source venv/bin/activate && python src/main.py"
 Icon=preferences-desktop-wallpaper
 Terminal=false
 Categories=Utility;
@@ -336,7 +356,7 @@ chmod +x ~/.local/share/applications/search-wallpaper.desktop
 Lägg till i `~/.bashrc`:
 
 ```bash
-alias newwall='cd ~/Dokument/Github/search_wallpaper_kubuntu && source venv/bin/activate && python src/main.py'
+alias newwall='cd ~/Dokument/Github/search_wallpaper && source venv/bin/activate && python src/main.py'
 ```
 
 Ladda om konfigurationen:
@@ -397,6 +417,42 @@ cp -r ~/Dokument/SearchWallpaper-backup-YYYYMMDD ~/.local/share/SearchWallpaper
 
 ## 🐛 Felsökning
 
+### Skrivbordsmiljö-detektering
+
+Kontrollera vilken skrivbordsmiljö som detekteras:
+
+```bash
+echo $XDG_CURRENT_DESKTOP
+```
+
+Förväntade resultat:
+- **Cinnamon**: `X-Cinnamon`
+- **KDE Plasma**: `KDE`
+- **MATE**: `MATE`
+- **GNOME**: `GNOME` eller `ubuntu:GNOME`
+- **Unity**: `Unity`
+
+### Problem: Bakgrundsbild ändras inte
+
+```bash
+# Kontrollera skrivbordsmiljö
+echo $XDG_CURRENT_DESKTOP
+
+# Testa manuellt baserat på din skrivbordsmiljö:
+
+# För Cinnamon (Linux Mint):
+gsettings set org.cinnamon.desktop.background picture-uri "file://$HOME/.local/share/SearchWallpaper/cache/bing_wallpaper_*.jpg"
+
+# För KDE Plasma (Kubuntu):
+plasma-apply-wallpaperimage ~/.local/share/SearchWallpaper/cache/bing_wallpaper_*.jpg
+
+# För MATE:
+gsettings set org.mate.background picture-filename "$HOME/.local/share/SearchWallpaper/cache/bing_wallpaper_*.jpg"
+
+# För GNOME (Ubuntu):
+gsettings set org.gnome.desktop.background picture-uri "file://$HOME/.local/share/SearchWallpaper/cache/bing_wallpaper_*.jpg"
+```
+
 ### Problem: "Edge saknas" trots installation
 
 ```bash
@@ -414,7 +470,9 @@ microsoft-edge --version
 which msedgedriver
 /usr/local/bin/msedgedriver --version
 
-# Om fel - installera om (se Steg 3)
+# Versioner måste matcha Edge!
+microsoft-edge --version
+/usr/local/bin/msedgedriver --version
 ```
 
 ### Problem: "ModuleNotFoundError: No module named 'tkinter'"
@@ -429,23 +487,9 @@ sudo apt install python3-tk
 Du har glömt aktivera virtual environment:
 
 ```bash
-cd ~/Dokument/Github/search_wallpaper_kubuntu
+cd ~/Dokument/Github/search_wallpaper
 source venv/bin/activate
 # Nu ska du se "(venv)" i terminalen
-```
-
-### Problem: Bakgrundsbild ändras inte
-
-```bash
-# Kontrollera skrivbordsmiljö
-echo $XDG_CURRENT_DESKTOP
-# Ska visa "KDE" eller liknande
-
-# Kontrollera plasma-apply-wallpaperimage
-which plasma-apply-wallpaperimage
-
-# Testa manuellt
-plasma-apply-wallpaperimage ~/.local/share/SearchWallpaper/cache/bing_wallpaper_*.jpg
 ```
 
 ### Problem: "Parsing errors" i konfigurationsfilen
@@ -480,6 +524,19 @@ microsoft-edge --version
 ---
 
 ## ⚙️ Tekniska detaljer
+
+### Stöd för skrivbordsmiljöer
+
+Programmet detekterar automatiskt din skrivbordsmiljö via `XDG_CURRENT_DESKTOP`:
+
+| Skrivbordsmiljö | Metod som används | Schema |
+|---|---|---|
+| **Cinnamon** | `gsettings` | `org.cinnamon.desktop.background` |
+| **KDE Plasma** | `plasma-apply-wallpaperimage` eller `dbus` | Native KDE |
+| **MATE** | `gsettings` | `org.mate.background` |
+| **GNOME/Unity** | `gsettings` | `org.gnome.desktop.background` |
+
+**Automatisk fallback:** Om skrivbordsmiljön är okänd försöker programmet alla metoder i ordning tills en lyckas.
 
 ### Begränsningar
 
@@ -519,7 +576,7 @@ search_wallpaper/
 │   │   └── search_config.py     # Sökterm-hantering
 │   ├── utils/
 │   │   ├── paths.py             # XDG-sökvägar
-│   │   └── wallpaper.py         # KDE Plasma-integration
+│   │   └── wallpaper.py         # Multi-DE integration
 │   └── main.py                  # Huvudprogram
 ├── venv/                        # Virtual environment
 ├── requirements.txt             # Python-beroenden
@@ -529,25 +586,10 @@ search_wallpaper/
 ### Köra i utvecklingsläge
 
 ```bash
-cd ~/Dokument/Github/search_wallpaper_kubuntu
+cd ~/Dokument/Github/search_wallpaper
 source venv/bin/activate
 python src/main.py
 ```
-
----
-
-## 📝 Changelog
-
-### Version 2.0 - Kubuntu Edition (2025-10-24)
-
-**Initial release för Linux/Kubuntu:**
-- ✅ KDE Plasma-integration
-- ✅ XDG Base Directory-standard
-- ✅ `plasma-apply-wallpaperimage` för bakgrund
-- ✅ GNOME-fallback för kompatibilitet
-- ✅ Plattformsspecifik Edge-detection
-- ✅ Manuell EdgeDriver-installation
-- ✅ Komplett dokumentation för nybörjare
 
 ---
 
@@ -556,8 +598,8 @@ python src/main.py
 ### Rapportera problem
 
 1. Kontrollera loggfilen: `~/.local/share/SearchWallpaper/logs/search_wallpaper.log`
-2. Verifiera systemkrav uppfyllda
-3. Testa manuella kommandon från Felsökning
+2. Kontrollera skrivbordsmiljö: `echo $XDG_CURRENT_DESKTOP`
+3. Verifiera systemkrav uppfyllda
 4. Skapa issue på GitHub med logg och systeminfo
 
 ### Utveckling
@@ -565,14 +607,14 @@ python src/main.py
 1. Forka repositoryt
 2. Skapa feature-branch
 3. Följ befintlig kodstil
-4. Testa på Kubuntu
+4. Testa på din skrivbordsmiljö
 5. Skicka pull request
 
 ---
 
 ## 📄 Licens
 
-Öppen källkod för personligt bruk.
+MIT License - Öppen källkod för personligt bruk.
 
 **OBS:** Programmet använder Bing Image Search och måste respektera Microsofts användarvillkor.
 
@@ -583,7 +625,7 @@ python src/main.py
 - **Microsoft Edge** - Webbläsare och WebDriver
 - **Selenium** - Webbautomation
 - **Bing Images** - Bildkälla
-- **KDE Plasma** - Desktop Environment
+- **Linux DE-team** - KDE, GNOME, Cinnamon, MATE
 - **Python-communityn** - Fantastiska bibliotek
 
 ---
@@ -594,4 +636,4 @@ För frågor eller problem - skapa ett issue på GitHub!
 
 ---
 
-**Njut av vackra bakgrundsbilder på din Kubuntu! 🐧🎨**
+**Njut av vackra bakgrundsbilder på ditt Linux-system! 🐧🎨**
