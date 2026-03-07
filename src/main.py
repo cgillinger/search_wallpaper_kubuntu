@@ -7,7 +7,6 @@ import sys
 import logging
 import tempfile
 import tkinter as tk
-from tkinter import ttk
 import time
 from api.bing_scraper import BingScraper, EdgeDriverVersionMismatchError
 from utils.wallpaper import set_wallpaper, download_image
@@ -150,7 +149,7 @@ def main():
             status.update_status("Ett fel inträffade")
             time.sleep(2)
             status.close()
-        except:
+        except Exception:
             pass
         sys.exit(1)
 

@@ -10,6 +10,7 @@ import logging
 import re
 import time
 import platform
+import shutil
 import subprocess
 from typing import Optional, Tuple, Dict
 from selenium import webdriver
@@ -57,8 +58,9 @@ def check_edgedriver_version():
             return
         edge_version = edge_match.group(1)
 
+        driver_exe = shutil.which('msedgedriver') or '/usr/local/bin/msedgedriver'
         driver_result = subprocess.run(
-            ['/usr/local/bin/msedgedriver', '--version'],
+            [driver_exe, '--version'],
             capture_output=True, text=True, timeout=10
         )
         if driver_result.returncode != 0:
@@ -167,7 +169,7 @@ def check_edge_installed_linux() -> bool:
             logger.info(f"Hittade Edge via which: {result.stdout.strip()}")
             return True
         
-        # Metod 2: dpkg (Debian/Ubuntu/Kubuntu)
+        # Metod 2: dpkg (Debian/Ubuntu/Linux Mint)
         try:
             result = subprocess.run(['dpkg', '-l', 'microsoft-edge-stable'],
                                   capture_output=True, text=True, timeout=5)
@@ -362,8 +364,8 @@ class BingScraper:
             
             try:
                 self._update_status("Startar webbläsare...")
-                # Använd manuellt installerad EdgeDriver
-                service = EdgeService('/usr/local/bin/msedgedriver')
+                driver_exe = shutil.which('msedgedriver') or '/usr/local/bin/msedgedriver'
+                service = EdgeService(driver_exe)
                 driver = webdriver.Edge(service=service, options=self.edge_options)
             except Exception as edge_error:
                 logger.error(f"Kunde inte starta Edge: {str(edge_error)}")

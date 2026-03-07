@@ -60,12 +60,12 @@ def setup_logging():
             for old_backup in backup_files[2:]:
                 try:
                     os.remove(os.path.join(paths['logs_dir'], old_backup))
-                except:
+                except OSError:
                     pass
-                    
+
         except Exception as e:
             # Om vi inte kan rotera, fortsätt ändå med befintlig fil
-            pass
+            logging.warning(f"Kunde inte rotera loggfilen: {str(e)}")
     
     # Grundläggande loggningskonfiguration
     logging.basicConfig(
