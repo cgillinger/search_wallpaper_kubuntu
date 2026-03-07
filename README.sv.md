@@ -1,9 +1,9 @@
-# SearchWallpaper — Kubuntu Edition
+# SearchWallpaper — Linux Edition
 
-**Automatisk Bing-bakgrundsbildshanterare för KDE Plasma på Kubuntu / Linux**
+**Automatisk Bing-bakgrundsbildshanterare för KDE Plasma, Cinnamon, MATE, GNOME och Enlightenment på Linux**
 
 [![Python](https://img.shields.io/badge/python-3.8%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
-[![Platform](https://img.shields.io/badge/plattform-Kubuntu%20%7C%20Linux%20Mint%20KDE-E95420?logo=ubuntu&logoColor=white)](https://kubuntu.org/)
+[![Platform](https://img.shields.io/badge/plattform-Kubuntu%20%7C%20Linux%20Mint%20%7C%20Ubuntu-E95420?logo=ubuntu&logoColor=white)](https://kubuntu.org/)
 [![KDE Plasma](https://img.shields.io/badge/KDE_Plasma-5%2B-1D99F3?logo=kde&logoColor=white)](https://kde.org/plasma-desktop/)
 [![Selenium](https://img.shields.io/badge/Selenium-4.16%2B-43B02A?logo=selenium&logoColor=white)](https://www.selenium.dev/)
 [![Microsoft Edge](https://img.shields.io/badge/Microsoft_Edge-krävs-0078D7?logo=microsoftedge&logoColor=white)](https://www.microsoft.com/edge)
@@ -15,11 +15,11 @@
 
 ## Vad är SearchWallpaper?
 
-**SearchWallpaper** hämtar automatiskt högupplösta bakgrundsbilder från Bing Images och sätter dem som skrivbordsbakgrund i KDE Plasma på Kubuntu, Linux Mint KDE eller annat Debian-baserat system med KDE Plasma.
+**SearchWallpaper** hämtar automatiskt högupplösta bakgrundsbilder från Bing Images och sätter dem som skrivbordsbakgrund på Kubuntu, Linux Mint, Ubuntu eller annat Debian-baserat Linux-system.
 
 Programmet använder en headless Microsoft Edge-webbläsare (via Selenium) för att söka Bing efter bilder som matchar dina egna söktermer. Varje bild valideras för upplösning (minst 1920×1080, landskapsformat) innan den sätts som bakgrundsbild — så du alltid får vassa, fullskärmsbakgrunder.
 
-> **Specifikt utformat för Kubuntu med KDE Plasma.**
+> **Stöder KDE Plasma, Cinnamon, MATE, GNOME och Enlightenment på Debian-baserat Linux.**
 > Inga API-nycklar behövs. Ingen bakgrundsdemon. Kör det när du vill ha en ny bakgrundsbild.
 
 ---
@@ -48,8 +48,8 @@ Programmet använder en headless Microsoft Edge-webbläsare (via Selenium) för 
 - Skärmupplösning 1920×1080 eller högre
 
 ### Programvara
-- **Kubuntu 20.04 eller senare** (testat på 24.04)
-- **KDE Plasma 5 eller 6**
+- **Kubuntu 20.04+ / Linux Mint 20+ / Ubuntu 20.04+** (testat på Kubuntu 24.04 och Linux Mint 21)
+- **KDE Plasma 5 eller 6** (eller Cinnamon, MATE, GNOME, Enlightenment)
 - **Python 3.8+**
 - **Microsoft Edge** (stable) — se installation nedan
 - **msedgedriver** som matchar din Edge-version — se installation nedan
@@ -520,7 +520,7 @@ search_wallpaper_kubuntu/
 3. Kör de manuella felsökningskommandona ovan
 4. Öppna ett [GitHub-issue](https://github.com/cgillinger/search_wallpaper_kubuntu/issues) med din loggutskrift och systeminformation
 
-För kodbidrag: forka repositoryt, skapa en feature-branch, följ befintlig kodstil, testa på Kubuntu och skicka sedan en pull request.
+För kodbidrag: forka repositoryt, skapa en feature-branch, följ befintlig kodstil, testa på Kubuntu, Linux Mint eller Ubuntu och skicka sedan en pull request.
 
 ---
 
@@ -540,4 +540,4 @@ För kodbidrag: forka repositoryt, skapa en feature-branch, följ befintlig kods
 
 ---
 
-**Få vackra, högupplösta bakgrundsbilder på din Kubuntu-dator automatiskt.**
+**Få vackra, högupplösta bakgrundsbilder på din Linux-dator automatiskt.**

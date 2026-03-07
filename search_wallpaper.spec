@@ -23,8 +23,7 @@ a = Analysis(
         'configparser',
         'logging',
         'ctypes',
-        'tkinter',
-        'tkinter.ttk'
+        'tkinter'
     ],
     hookspath=[],
     hooksconfig={},

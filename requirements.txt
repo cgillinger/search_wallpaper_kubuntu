@@ -1,4 +1,4 @@
-# SearchWallpaper - Kubuntu Edition
+# SearchWallpaper - Linux Edition
 # Python dependencies
 
 # Web automation

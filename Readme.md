@@ -1,9 +1,9 @@
-# SearchWallpaper — Kubuntu Edition
+# SearchWallpaper — Linux Edition
 
-**Automatic Bing wallpaper manager for KDE Plasma on Kubuntu / Linux**
+**Automatic Bing wallpaper manager for KDE Plasma, Cinnamon, MATE, GNOME and Enlightenment on Linux**
 
 [![Python](https://img.shields.io/badge/python-3.8%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
-[![Platform](https://img.shields.io/badge/platform-Kubuntu%20%7C%20Linux%20Mint%20KDE-E95420?logo=ubuntu&logoColor=white)](https://kubuntu.org/)
+[![Platform](https://img.shields.io/badge/platform-Kubuntu%20%7C%20Linux%20Mint%20%7C%20Ubuntu-E95420?logo=ubuntu&logoColor=white)](https://kubuntu.org/)
 [![KDE Plasma](https://img.shields.io/badge/KDE_Plasma-5%2B-1D99F3?logo=kde&logoColor=white)](https://kde.org/plasma-desktop/)
 [![Selenium](https://img.shields.io/badge/Selenium-4.16%2B-43B02A?logo=selenium&logoColor=white)](https://www.selenium.dev/)
 [![Microsoft Edge](https://img.shields.io/badge/Microsoft_Edge-required-0078D7?logo=microsoftedge&logoColor=white)](https://www.microsoft.com/edge)
@@ -15,11 +15,11 @@
 
 ## What is SearchWallpaper?
 
-**SearchWallpaper** automatically fetches high-resolution wallpapers from Bing Images and sets them as your KDE Plasma desktop background on Kubuntu, Linux Mint KDE, or any Debian-based system running KDE Plasma.
+**SearchWallpaper** automatically fetches high-resolution wallpapers from Bing Images and sets them as your desktop background on Kubuntu, Linux Mint, Ubuntu, or any Debian-based Linux system.
 
 The program uses a headless Microsoft Edge browser (via Selenium) to search Bing for images matching your custom search terms. It validates every image for resolution (1920×1080 minimum, landscape orientation) before setting it as your wallpaper — so you only ever get crisp, full-screen backgrounds.
 
-> **Specifically designed for Kubuntu with KDE Plasma.**
+> **Supports KDE Plasma, Cinnamon, MATE, GNOME and Enlightenment on Debian-based Linux.**
 > No API keys required. No background daemon. Just run it when you want a new wallpaper.
 
 ---
@@ -48,7 +48,7 @@ The program uses a headless Microsoft Edge browser (via Selenium) to search Bing
 - Screen resolution 1920×1080 or higher
 
 ### Software
-- **Kubuntu 20.04 or later** (tested on 24.04)
+- **Kubuntu 20.04+ / Linux Mint 20+ / Ubuntu 20.04+** (tested on Kubuntu 24.04 and Linux Mint 21)
 - **KDE Plasma 5 or 6**
 - **Python 3.8+**
 - **Microsoft Edge** (stable) — see installation below
@@ -520,7 +520,7 @@ search_wallpaper_kubuntu/
 3. Run the manual troubleshooting commands above
 4. Open a [GitHub issue](https://github.com/cgillinger/search_wallpaper_kubuntu/issues) with your log output and system info
 
-For code contributions: fork the repository, create a feature branch, follow existing code style, test on Kubuntu, then submit a pull request.
+For code contributions: fork the repository, create a feature branch, follow existing code style, test on Kubuntu, Linux Mint, or Ubuntu, then submit a pull request.
 
 ---
 
@@ -540,4 +540,4 @@ Open source for personal use. This program uses Bing Image Search — please res
 
 ---
 
-**Get beautiful, high-resolution wallpapers on your Kubuntu desktop automatically.**
+**Get beautiful, high-resolution wallpapers on your Linux desktop automatically.**
