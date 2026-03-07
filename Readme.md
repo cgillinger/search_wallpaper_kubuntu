@@ -264,13 +264,13 @@ queries =
 </details>
 
 <details>
-<summary>🚗 Cars</summary>
+<summary>🚲 Bicycles</summary>
 
 ```ini
 queries =
-    sports car wallpaper
-    classic car wallpaper
-    supercar wallpaper
+    bicycle cycling wallpaper
+    mountain bike trail wallpaper
+    road cycling wallpaper
 ```
 </details>
 
