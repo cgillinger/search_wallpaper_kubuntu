@@ -61,7 +61,8 @@ Programmet använder en headless Microsoft Edge-webbläsare (via Selenium) för 
 | ✅ Testat och fungerar | Kubuntu 24.04 med KDE Plasma 5 |
 | ✅ Testat och fungerar | Linux Mint 21+ med Cinnamon |
 | 🟡 Borde fungera (otestat) | Ubuntu med KDE, Linux Mint KDE, KDE neon, Debian KDE |
-| 🟡 Kan fungera med ändringar | GNOME, MATE (fallback-stöd finns) |
+| 🟡 Borde fungera (otestat) | GNOME, MATE |
+| 🟡 Borde fungera (otestat) | Enlightenment (E17/E18+) |
 | ❌ Stöds ej | Xfce, LXQt, i3, Sway, Fedora/Arch/Red Hat |
 
 ---
@@ -461,7 +462,7 @@ search_wallpaper_kubuntu/
 │   │   └── search_config.py     # Söktermshantering
 │   ├── utils/
 │   │   ├── paths.py             # XDG-kompatibla sökvägar
-│   │   └── wallpaper.py         # KDE Plasma-integration
+│   │   └── wallpaper.py         # Plattformsoberoende bakgrundsbild (KDE, Cinnamon, MATE, GNOME, Enlightenment)
 │   └── main.py                  # Startpunkt + GUI-statusfönster
 ├── requirements.txt
 └── README.md
@@ -487,6 +488,14 @@ search_wallpaper_kubuntu/
 ---
 
 ## Changelog
+
+### Version 2.2 (2026-03-07)
+
+- **Nytt:** Stöd för Cinnamon (Linux Mint standard) via `gsettings org.cinnamon.desktop.background`
+- **Nytt:** Stöd för MATE Desktop via `gsettings org.mate.background`
+- **Nytt:** Stöd för Enlightenment (E17/E18+) via `enlightenment_remote`
+- **Förbättrat:** GNOME sätter nu även `picture-uri-dark` (stöd för mörkt tema)
+- **Förbättrat:** Fallback för okänd skrivbordsmiljö provar nu alla fem metoder i prioritetsordning
 
 ### Version 2.1 (2026-03-07)
 

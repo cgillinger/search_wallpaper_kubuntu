@@ -61,7 +61,8 @@ The program uses a headless Microsoft Edge browser (via Selenium) to search Bing
 | ✅ Tested and working | Kubuntu 24.04 with KDE Plasma 5 |
 | ✅ Tested and working | Linux Mint 21+ with Cinnamon |
 | 🟡 Should work (untested) | Ubuntu with KDE, Linux Mint KDE, KDE neon, Debian KDE |
-| 🟡 May work with changes | GNOME, MATE (fallback support exists) |
+| 🟡 Should work (untested) | GNOME, MATE |
+| 🟡 Should work (untested) | Enlightenment (E17/E18+) |
 | ❌ Not supported | Xfce, LXQt, i3, Sway, Fedora/Arch/Red Hat |
 
 ---
@@ -461,7 +462,7 @@ search_wallpaper_kubuntu/
 │   │   └── search_config.py     # Search term management
 │   ├── utils/
 │   │   ├── paths.py             # XDG-compliant paths
-│   │   └── wallpaper.py         # KDE Plasma integration
+│   │   └── wallpaper.py         # Cross-platform wallpaper (KDE, Cinnamon, MATE, GNOME, Enlightenment)
 │   └── main.py                  # Entry point + GUI status window
 ├── requirements.txt
 └── README.md
@@ -487,6 +488,14 @@ search_wallpaper_kubuntu/
 ---
 
 ## Changelog
+
+### Version 2.2 (2026-03-07)
+
+- **New:** Cinnamon desktop support (Linux Mint default) via `gsettings org.cinnamon.desktop.background`
+- **New:** MATE Desktop support via `gsettings org.mate.background`
+- **New:** Enlightenment (E17/E18+) support via `enlightenment_remote`
+- **Improved:** GNOME now sets both `picture-uri` and `picture-uri-dark` (dark theme support)
+- **Improved:** Unknown desktop environment fallback now tries all five methods in order
 
 ### Version 2.1 (2026-03-07)
 
