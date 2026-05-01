@@ -7,10 +7,8 @@ import random
 import json
 import os
 import logging
-import re
 import time
 import platform
-import shutil
 import subprocess
 from typing import Optional, Tuple, Dict
 from selenium import webdriver
@@ -18,7 +16,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.edge.options import Options
-from selenium.webdriver.edge.service import Service as EdgeService
 import requests
 from PIL import Image
 from io import BytesIO
@@ -29,78 +26,6 @@ from config.search_config import load_search_queries
 
 logger = logging.getLogger(__name__)
 
-
-class EdgeDriverVersionMismatchError(Exception):
-    """Raised when the installed msedgedriver version does not match the Edge browser version."""
-    pass
-
-
-def check_edgedriver_version():
-    """
-    Verifies that the installed msedgedriver matches the running Edge browser version.
-
-    If the versions differ, logs a detailed error message including the exact wget command
-    needed to download the correct driver from the reliable blob storage URL, then raises
-    EdgeDriverVersionMismatchError so callers can show a helpful status message.
-    """
-    try:
-        edge_result = subprocess.run(
-            ['microsoft-edge', '--version'],
-            capture_output=True, text=True, timeout=10
-        )
-        if edge_result.returncode != 0:
-            logger.warning("Kunde inte bestämma Edge-version för versionsjämförelse")
-            return
-
-        edge_match = re.search(r'(\d+\.\d+\.\d+\.\d+)', edge_result.stdout)
-        if not edge_match:
-            logger.warning(f"Kunde inte tolka Edge-version från: {edge_result.stdout.strip()}")
-            return
-        edge_version = edge_match.group(1)
-
-        driver_exe = shutil.which('msedgedriver') or '/usr/local/bin/msedgedriver'
-        driver_result = subprocess.run(
-            [driver_exe, '--version'],
-            capture_output=True, text=True, timeout=10
-        )
-        if driver_result.returncode != 0:
-            logger.warning("Kunde inte bestämma msedgedriver-version för versionsjämförelse")
-            return
-
-        driver_match = re.search(r'(\d+\.\d+\.\d+\.\d+)', driver_result.stdout)
-        if not driver_match:
-            logger.warning(f"Kunde inte tolka msedgedriver-version från: {driver_result.stdout.strip()}")
-            return
-        driver_version = driver_match.group(1)
-
-        logger.info(f"Edge-version: {edge_version} | msedgedriver-version: {driver_version}")
-
-        if edge_version != driver_version:
-            wget_cmd = (
-                f"wget https://msedgewebdriverstorage.blob.core.windows.net"
-                f"/edgewebdriver/{edge_version}/edgedriver_linux64.zip"
-            )
-            logger.error(
-                f"EdgeDriver-versionsmatchfel: Edge={edge_version}, msedgedriver={driver_version}\n"
-                f"Edge har troligen uppdaterats automatiskt. Åtgärda med:\n"
-                f"  cd ~/Hämtningar\n"
-                f"  {wget_cmd}\n"
-                f"  unzip edgedriver_linux64.zip\n"
-                f"  sudo mv msedgedriver /usr/local/bin/\n"
-                f"  sudo chmod +x /usr/local/bin/msedgedriver\n"
-                f"  /usr/local/bin/msedgedriver --version\n"
-                f"OBS: Använd blob storage-URL:en ovan om msedgedriver.azureedge.net är\n"
-                f"    otillgänglig (DNS-fel kan uppstå t.ex. efter VPN-användning)."
-            )
-            raise EdgeDriverVersionMismatchError(
-                f"EdgeDriver-version stämmer inte: Edge {edge_version} vs "
-                f"msedgedriver {driver_version}. Se loggen för åtgärdsinstruktioner."
-            )
-
-    except EdgeDriverVersionMismatchError:
-        raise
-    except Exception as e:
-        logger.warning(f"Kunde inte verifiera EdgeDriver-version: {str(e)}")
 
 
 def check_edge_installed_windows() -> bool:
@@ -325,10 +250,6 @@ class BingScraper:
         if not self._increment_search_count():
             return None
 
-        # Kontrollera att EdgeDriver-version matchar Edge-versionen.
-        # Kastar EdgeDriverVersionMismatchError om versionerna skiljer sig.
-        check_edgedriver_version()
-
         driver = None
         try:
             # Kontrollera först om Edge är installerad
@@ -364,9 +285,7 @@ class BingScraper:
             
             try:
                 self._update_status("Startar webbläsare...")
-                driver_exe = shutil.which('msedgedriver') or '/usr/local/bin/msedgedriver'
-                service = EdgeService(driver_exe)
-                driver = webdriver.Edge(service=service, options=self.edge_options)
+                driver = webdriver.Edge(options=self.edge_options)
             except Exception as edge_error:
                 logger.error(f"Kunde inte starta Edge: {str(edge_error)}")
                 root = tk.Tk()
