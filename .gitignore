@@ -53,3 +53,4 @@ Thumbs.db
 drivers/
 
 build/
+__pycache__/
