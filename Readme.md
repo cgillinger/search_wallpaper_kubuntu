@@ -108,43 +108,24 @@ python3 --version
 
 ---
 
-### Step 3: Download and Install EdgeDriver
+### Step 3: EdgeDriver — handled automatically
 
-**Method A: Via browser (recommended for beginners)**
+**You do not need to install msedgedriver manually.**
 
-1. Open Microsoft Edge
-2. Check your Edge version: `microsoft-edge --version` in terminal
-3. Go to: https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/
-4. Download **Linux x64** for your Edge version
-5. Install:
+This app uses Selenium Manager (built into Selenium 4.16+), which automatically
+downloads the correct `msedgedriver` for your installed Edge version and keeps it
+in sync whenever Edge auto-updates. The driver is cached under `~/.cache/selenium/`.
 
-```bash
-# Go to Downloads folder (adjust path for your locale)
-cd ~/Downloads  # or ~/Hämtningar for Swedish, ~/Nedlastinger for Norwegian, etc.
+> ⚠️ **Do not place an `msedgedriver` binary in `/usr/local/bin/` (or anywhere on
+> your PATH).** A manually installed driver becomes outdated every time Edge
+> updates and causes a version-mismatch error (`SessionNotCreatedException`).
+> If you have one left over from an older setup, remove it:
+>
+> ```bash
+> sudo rm -f /usr/local/bin/msedgedriver
+> ```
 
-# Extract
-unzip edgedriver_linux64.zip
-
-# Install
-sudo mv msedgedriver /usr/local/bin/
-sudo chmod +x /usr/local/bin/msedgedriver
-
-# Verify
-/usr/local/bin/msedgedriver --version
-```
-
-**Method B: Via terminal (for advanced users)**
-
-```bash
-# Replace VERSION with your Edge version (e.g. 141.0.3537.92)
-VERSION=$(microsoft-edge --version | grep -oP '\d+\.\d+\.\d+\.\d+')
-cd ~/Downloads
-wget https://msedgedriver.azureedge.net/${VERSION}/edgedriver_linux64.zip
-unzip edgedriver_linux64.zip
-sudo mv msedgedriver /usr/local/bin/
-sudo chmod +x /usr/local/bin/msedgedriver
-/usr/local/bin/msedgedriver --version
-```
+Nothing to do here — just continue to the next step.
 
 ---
 
@@ -438,16 +419,21 @@ microsoft-edge --version
 # If no result - reinstall (see Step 1)
 ```
 
-### Problem: "msedgedriver not found"
+### Problem: Driver version mismatch (`SessionNotCreatedException`)
+
+If you see an error like *"This version of Microsoft Edge WebDriver only supports
+Microsoft Edge version X"*, you have a stale `msedgedriver` on your PATH that
+Selenium Manager is picking up instead of downloading the correct one.
 
 ```bash
-# Check EdgeDriver
+# Find and remove the stale driver
 which msedgedriver
-/usr/local/bin/msedgedriver --version
+sudo rm -f /usr/local/bin/msedgedriver
 
-# Versions must match Edge!
-microsoft-edge --version
-/usr/local/bin/msedgedriver --version
+# Optional: clear the Selenium cache so it re-downloads cleanly
+rm -rf ~/.cache/selenium
+
+# Next run, Selenium Manager downloads the matching driver automatically.
 ```
 
 ### Problem: "ModuleNotFoundError: tkinter"

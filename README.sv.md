@@ -106,43 +106,24 @@ python3 --version
 
 ---
 
-### Steg 3: Ladda ner och installera EdgeDriver
+### Steg 3: EdgeDriver — sköts automatiskt
 
-**Metod A: Via webbläsaren (rekommenderas för nybörjare)**
+**Du behöver inte installera msedgedriver manuellt.**
 
-1. Öppna Microsoft Edge
-2. Kolla din Edge-version: `microsoft-edge --version` i terminal
-3. Gå till: https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/
-4. Ladda ner **Linux x64** för din Edge-version
-5. Installera:
+Appen använder Selenium Manager (inbyggt i Selenium 4.16+), som automatiskt laddar
+ner rätt `msedgedriver` för din installerade Edge-version och håller den i synk varje
+gång Edge uppdateras. Drivern cachas under `~/.cache/selenium/`.
 
-```bash
-# Gå till Hämtningar (eller Downloads om du har engelsk systeminställning)
-cd ~/Hämtningar  # eller ~/Downloads
+> ⚠️ **Lägg inte en `msedgedriver`-binär i `/usr/local/bin/` (eller någon annanstans
+> på din PATH).** En manuellt installerad driver blir föråldrad varje gång Edge
+> uppdateras och orsakar ett versions-mismatch-fel (`SessionNotCreatedException`).
+> Om du har en kvar från en äldre installation, ta bort den:
+>
+> ```bash
+> sudo rm -f /usr/local/bin/msedgedriver
+> ```
 
-# Packa upp
-unzip edgedriver_linux64.zip
-
-# Installera
-sudo mv msedgedriver /usr/local/bin/
-sudo chmod +x /usr/local/bin/msedgedriver
-
-# Verifiera
-/usr/local/bin/msedgedriver --version
-```
-
-**Metod B: Via terminal (för avancerade)**
-
-```bash
-# Ersätt VERSION med din Edge-version (t.ex. 141.0.3537.92)
-VERSION=$(microsoft-edge --version | grep -oP '\d+\.\d+\.\d+\.\d+')
-cd ~/Hämtningar
-wget https://msedgedriver.azureedge.net/${VERSION}/edgedriver_linux64.zip
-unzip edgedriver_linux64.zip
-sudo mv msedgedriver /usr/local/bin/
-sudo chmod +x /usr/local/bin/msedgedriver
-/usr/local/bin/msedgedriver --version
-```
+Inget att göra här — fortsätt bara till nästa steg.
 
 ---
 
@@ -463,16 +444,21 @@ microsoft-edge --version
 # Om inget resultat - installera om (se Steg 1)
 ```
 
-### Problem: "msedgedriver kunde inte hittas"
+### Problem: Versions-mismatch på drivern (`SessionNotCreatedException`)
+
+Om du får ett fel som *"This version of Microsoft Edge WebDriver only supports
+Microsoft Edge version X"* har du en föråldrad `msedgedriver` på din PATH som
+Selenium Manager plockar upp i stället för att ladda ner rätt version.
 
 ```bash
-# Kontrollera EdgeDriver
+# Hitta och ta bort den föråldrade drivern
 which msedgedriver
-/usr/local/bin/msedgedriver --version
+sudo rm -f /usr/local/bin/msedgedriver
 
-# Versioner måste matcha Edge!
-microsoft-edge --version
-/usr/local/bin/msedgedriver --version
+# Valfritt: rensa Selenium-cachen så den laddas om rent
+rm -rf ~/.cache/selenium
+
+# Vid nästa körning laddar Selenium Manager ner rätt driver automatiskt.
 ```
 
 ### Problem: "ModuleNotFoundError: No module named 'tkinter'"
@@ -511,14 +497,16 @@ python src/main.py  # Skapar ny standardfil
 
 ### Problem: "Could not reach host"
 
-EdgeDriver-problem:
+Oftast ett nätverks- eller driver-problem:
 
 ```bash
-# Kontrollera EdgeDriver-version matchar Edge
-microsoft-edge --version
-/usr/local/bin/msedgedriver --version
+# Kontrollera nätverksanslutning
+ping -c 3 bing.com
 
-# Versioner ska matcha! Om inte - ladda ner rätt version (se Steg 3)
+# Om felet är en driver-mismatch, ta bort ev. manuell driver så
+# Selenium Manager kan ladda ner rätt version automatiskt:
+sudo rm -f /usr/local/bin/msedgedriver
+rm -rf ~/.cache/selenium
 ```
 
 ---
