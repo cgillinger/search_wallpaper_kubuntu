@@ -19,7 +19,7 @@ SearchWallpaper is a program that automatically fetches and sets random wallpape
 - ✅ **Image validation** - only high-quality images in landscape format (1920x1080+)
 - ✅ **Smart filtering** - avoid drawings, cartoons, people, etc.
 - ✅ **History management** - no duplicates of recently used images
-- ✅ **Daily search limit** - respects Bing TOS (max 50/day)
+- ✅ **Daily search limit** - self-imposed cap (max 50/day) to stay courteous and avoid rate-limiting
 - ✅ **Cache system** - reuses images during network issues
 - ✅ **Detailed logging** - easy troubleshooting
 - ✅ **Multi-DE support** - KDE Plasma, Cinnamon, MATE, GNOME
@@ -469,7 +469,7 @@ The program automatically detects your DE via `XDG_CURRENT_DESKTOP`:
 
 ### Limitations
 
-- **Max 50 searches/day** - respects Bing TOS
+- **Max 50 searches/day** - self-imposed cap to stay courteous and avoid IP rate-limiting (not a Bing-mandated number)
 - **Max 50 images in history** - avoids duplication
 - **Max 3 log files** - automatic rotation
 - **Image requirements:** 1920x1080 pixels minimum, landscape format
@@ -479,7 +479,6 @@ The program automatically detects your DE via `XDG_CURRENT_DESKTOP`:
 - ✅ No API keys needed
 - ✅ Local data storage
 - ✅ No background processes
-- ✅ Respects Bing terms of service
 - ✅ No data sent to external servers
 
 ---
@@ -522,7 +521,7 @@ search_wallpaper/
 
 MIT License - Open source for personal use.
 
-**Note:** Program uses Bing Image Search and must respect Microsoft's terms of service.
+**Note:** This program scrapes Bing's public image search results page (the official Bing Search API was retired on 11 August 2025). Automated access of Bing's web results is generally restricted by Microsoft's terms; this is a personal hobby project intended for light personal use only. The self-imposed 50 searches/day limit is a courtesy throttle to avoid hammering Bing and getting rate-limited — it is not a Bing-sanctioned quota.
 
 ---
 

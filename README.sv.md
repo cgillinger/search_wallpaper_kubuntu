@@ -17,7 +17,7 @@ SearchWallpaper är ett program som automatiskt hämtar och sätter slumpmässig
 - ✅ **Bildvalidering** - endast högkvalitativa bilder i landskapsformat (1920x1080+)
 - ✅ **Smart filtrering** - undvik teckningar, cartoons, människor etc.
 - ✅ **Historikhantering** - inga dubbletter av nyligen använda bilder
-- ✅ **Daglig sökgräns** - respekterar Bing TOS (max 50/dag)
+- ✅ **Daglig sökgräns** - självpåtagen gräns (max 50/dag) för att vara hänsynsfull och undvika rate-limiting
 - ✅ **Cache-system** - återanvänder bilder vid nätverksproblem
 - ✅ **Detaljerad loggning** - enkel felsökning
 - ✅ **Multi-DE stöd** - KDE Plasma, Cinnamon, MATE, GNOME
@@ -528,7 +528,7 @@ Programmet detekterar automatiskt din skrivbordsmiljö via `XDG_CURRENT_DESKTOP`
 
 ### Begränsningar
 
-- **Max 50 sökningar/dag** - respekterar Bing TOS
+- **Max 50 sökningar/dag** - självpåtagen gräns för att vara hänsynsfull och undvika IP-rate-limiting (ingen Bing-bestämd siffra)
 - **Max 50 bilder i historik** - undviker duplicering
 - **Max 3 loggfiler** - automatisk rotation
 - **Minimikrav bilder:** 1920x1080 pixlar, landskapsformat
@@ -538,7 +538,6 @@ Programmet detekterar automatiskt din skrivbordsmiljö via `XDG_CURRENT_DESKTOP`
 - ✅ Inga API-nycklar behövs
 - ✅ Lokal datalagring
 - ✅ Ingen bakgrundskörning
-- ✅ Respekterar Bing användarvillkor
 - ✅ Ingen data skickas till externa servrar
 
 ### Prestanda
@@ -604,7 +603,7 @@ python src/main.py
 
 MIT License - Öppen källkod för personligt bruk.
 
-**OBS:** Programmet använder Bing Image Search och måste respektera Microsofts användarvillkor.
+**OBS:** Programmet skrapar Bings publika bildsökningssida (det officiella Bing Search API:t lades ner 11 augusti 2025). Automatiserad åtkomst av Bings webbresultat är generellt begränsad av Microsofts användarvillkor; det här är ett personligt hobbyprojekt avsett endast för lätt personligt bruk. Den självpåtagna gränsen på 50 sökningar/dag är en artighetsgräns för att inte belasta Bing och bli rate-limitad — det är ingen Bing-sanktionerad kvot.
 
 ---
 
